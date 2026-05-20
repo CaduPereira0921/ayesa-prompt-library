@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayesa Prompt Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0B2C6B;--blue:#1A6FA8;--teal:#0F7B6C;--amber:#B85C00;--purple:#6B3FA0;
+  --navy-light:#E8EDF7;--blue-light:#E6F1FB;--teal-light:#E1F5EE;--amber-light:#FAEEDA;--purple-light:#F0E8FF;
+  --bg:#F7F8FC;--surface:#FFFFFF;--border:rgba(11,44,107,0.12);
+  --text:#0B2C6B;--text-muted:#5A6A8A;--text-light:#8A9AB8;
+  --radius:10px;--radius-lg:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;}
+
+header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.logo{display:flex;align-items:center;gap:12px;color:white;}
+.logo-mark{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;color:white;}
+.logo-text{font-size:15px;font-weight:500;color:rgba(255,255,255,0.9);}
+.logo-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:1px;}
+.header-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 12px;font-size:12px;color:rgba(255,255,255,0.7);}
+
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#1A3A8A 50%,#1A6FA8 100%);padding:3rem 2rem 2.5rem;text-align:center;color:white;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50%;left:-20%;width:60%;height:200%;background:rgba(255,255,255,0.03);border-radius:50%;}
+.hero h1{font-size:2rem;font-weight:600;margin-bottom:0.5rem;position:relative;}
+.hero p{color:rgba(255,255,255,0.65);font-size:1rem;margin-bottom:1.5rem;position:relative;}
+.search-wrap{max-width:520px;margin:0 auto;position:relative;}
+.search-wrap input{width:100%;padding:12px 16px 12px 44px;border-radius:var(--radius-lg);border:none;font-family:'DM Sans',sans-serif;font-size:15px;background:rgba(255,255,255,0.95);color:var(--text);outline:none;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:18px;}
+.stats{display:flex;justify-content:center;gap:2rem;margin-top:1.5rem;position:relative;}
+.stat{text-align:center;color:white;}
+.stat-num{font-size:1.5rem;font-weight:600;}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;}
+
+/* TABS */
+.tabs-bar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 2rem;max-width:1100px;margin:0 auto;}
+.tab-btn{padding:12px 18px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;font-weight:500;}
+.tab-btn:hover{color:var(--navy);}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--blue);}
+
+.main{max-width:1100px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:240px 1fr;gap:1.5rem;align-items:start;}
+
+.sidebar{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);padding:1.25rem;position:sticky;top:76px;}
+.sidebar-section{margin-bottom:1.5rem;}
+.sidebar-section:last-child{margin-bottom:0;}
+.sidebar-title{font-size:11px;font-weight:500;color:var(--text-light);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;}
+.filter-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;border-radius:8px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--text-muted);cursor:pointer;text-align:left;transition:all 0.15s;}
+.filter-btn:hover{background:var(--bg);color:var(--navy);}
+.filter-btn.active{background:var(--navy-light);color:var(--navy);font-weight:500;}
+.filter-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot-estrutural{background:var(--blue);}
+.dot-cognitivo{background:var(--teal);}
+.dot-verificacao{background:var(--amber);}
+.dot-funcao{background:var(--purple);}
+.dot-all{background:var(--text-light);}
+.filter-count{margin-left:auto;font-size:11px;color:var(--text-light);background:var(--bg);border-radius:10px;padding:1px 6px;}
+
+.content{min-width:0;}
+.content-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.result-count{font-size:13px;color:var(--text-muted);}
+
+/* FUNCTION VIEW */
+.funcao-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:2rem;}
+.funcao-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.1rem;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;}
+.funcao-card:hover{border-left-color:var(--purple);transform:translateY(-1px);box-shadow:0 4px 16px rgba(11,44,107,0.08);}
+.funcao-card.active-funcao{border-left-color:var(--purple);background:var(--purple-light);}
+.funcao-card-name{font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4;}
+.funcao-card-count{font-size:12px;color:var(--text-light);}
+.funcao-card-arrow{font-size:12px;color:var(--purple);margin-top:6px;opacity:0;}
+.funcao-card:hover .funcao-card-arrow,.funcao-card.active-funcao .funcao-card-arrow{opacity:1;}
+
+.funcao-results-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding:10px 14px;background:var(--purple-light);border-radius:var(--radius);border-left:3px solid var(--purple);}
+.funcao-results-title{font-size:14px;font-weight:500;color:var(--purple);}
+.funcao-back-btn{margin-left:auto;font-size:12px;color:var(--purple);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;text-decoration:underline;}
+
+/* CATEGORY SECTION */
+.category-section{margin-bottom:2rem;}
+.category-header{display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+.category-tag{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.05em;}
+.tag-estrutural{background:var(--blue-light);color:var(--blue);}
+.tag-cognitivo{background:var(--teal-light);color:var(--teal);}
+.tag-verificacao{background:var(--amber-light);color:var(--amber);}
+.tag-funcao{background:var(--purple-light);color:var(--purple);}
+.category-name{font-size:16px;font-weight:500;color:var(--text);}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;opacity:0;transition:opacity 0.2s;}
+.card:hover{border-color:rgba(26,111,168,0.3);transform:translateY(-1px);box-shadow:0 4px 16px rgba(11,44,107,0.08);}
+.card:hover::before{opacity:1;}
+.card-estrutural::before{background:var(--blue);}
+.card-cognitivo::before{background:var(--teal);}
+.card-verificacao::before{background:var(--amber);}
+.card-framework{font-size:11px;font-weight:500;color:var(--text-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.card-title{font-size:14px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:8px;}
+.card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.card-tag{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--bg);color:var(--text-muted);}
+.card-arrow{margin-left:auto;color:var(--text-light);font-size:14px;transition:transform 0.2s;}
+.card:hover .card-arrow{transform:translateX(2px);}
+
+/* FUNCTION TAGS on cards */
+.funcao-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.funcao-tag-pill{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--purple-light);color:var(--purple);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,44,107,0.4);z-index:200;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(2px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:var(--radius-lg);width:100%;max-width:680px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(11,44,107,0.2);}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;position:sticky;top:0;background:var(--surface);border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
+.modal-header-left{flex:1;}
+.modal-framework{font-size:11px;font-weight:500;color:var(--text-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.modal-title{font-size:18px;font-weight:500;color:var(--text);}
+.modal-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:18px;flex-shrink:0;transition:all 0.15s;}
+.modal-close:hover{background:var(--navy-light);color:var(--navy);}
+.modal-body{padding:1.5rem;}
+.modal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.modal-badge{font-size:12px;padding:4px 10px;border-radius:20px;font-weight:500;}
+.prompt-block{background:#F0F4FF;border:1px solid rgba(26,111,168,0.15);border-left:3px solid var(--blue);border-radius:0 var(--radius) var(--radius) 0;padding:1rem 1.25rem;margin-bottom:1rem;}
+.prompt-block-label{font-size:11px;font-weight:500;color:var(--blue);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.prompt-block-text{font-family:'DM Mono',monospace;font-size:13px;color:var(--text);line-height:1.7;white-space:pre-wrap;}
+.copy-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-muted);cursor:pointer;transition:all 0.15s;margin-top:1rem;}
+.copy-btn:hover{background:var(--navy);color:white;border-color:var(--navy);}
+.copy-btn.copied{background:var(--teal);color:white;border-color:var(--teal);}
+.modal-tip{background:var(--teal-light);border-radius:var(--radius);padding:0.75rem 1rem;font-size:13px;color:var(--teal);margin-top:1rem;line-height:1.5;}
+.modal-tip strong{font-weight:500;}
+.modal-funcoes{margin-top:1rem;}
+.modal-funcoes-title{font-size:11px;font-weight:500;color:var(--text-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;}
+.modal-funcoes-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.modal-funcao-pill{font-size:12px;padding:4px 10px;border-radius:20px;background:var(--purple-light);color:var(--purple);font-weight:500;}
+
+.no-results{text-align:center;padding:3rem 1rem;color:var(--text-muted);}
+.no-results-icon{font-size:2.5rem;margin-bottom:1rem;color:var(--text-light);}
+
+@media(max-width:768px){.main{grid-template-columns:1fr;padding:1rem;}.sidebar{position:static;}.hero h1{font-size:1.5rem;}.stats{gap:1rem;}.tabs-bar{padding:0 1rem;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">AI</div>
+    <div>
+      <div class="logo-text">Ayesa Prompt Library</div>
+      <div class="logo-sub">ibp solutions × Ayesa</div>
+    </div>
+  </div>
+  <div class="header-badge">v1.3 · Workshop 1</div>
+</header>
+
+<div class="hero">
+  <h1>Biblioteca de Prompts</h1>
+  <p>Prompts prontos para o dia a dia da Ayesa — encontre pelo que precisa fazer</p>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Buscar por atividade, framework ou tema..." oninput="onSearch()">
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">30</div><div class="stat-label">Prompts</div></div>
+    <div class="stat"><div class="stat-num">13</div><div class="stat-label">Frameworks</div></div>
+    <div class="stat"><div class="stat-num">17</div><div class="stat-label">Atividades</div></div>
+  </div>
+</div>
+
+<div style="background:var(--surface);border-bottom:1px solid var(--border);">
+  <div style="max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;">
+    <button class="tab-btn active" onclick="setView('framework',this)">Por Framework</button>
+    <button class="tab-btn" onclick="setView('funcao',this)">Por Função / Atividade</button>
+  </div>
+</div>
+
+<div class="main">
+  <aside class="sidebar" id="sidebar">
+    <div id="sidebarFramework">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Visualizar</div>
+        <button class="filter-btn active" onclick="setFilter('all')" id="btn-all">
+          <span class="filter-dot dot-all"></span> Todos os prompts
+          <span class="filter-count">30</span>
+        </button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Por Tipo</div>
+        <button class="filter-btn" onclick="setFilter('estrutural')">
+          <span class="filter-dot dot-estrutural"></span> Estruturais <span class="filter-count">14</span>
+        </button>
+        <button class="filter-btn" onclick="setFilter('cognitivo')">
+          <span class="filter-dot dot-cognitivo"></span> Cognitivos <span class="filter-count">12</span>
+        </button>
+        <button class="filter-btn" onclick="setFilter('verificacao')">
+          <span class="filter-dot dot-verificacao"></span> Verificação <span class="filter-count">4</span>
+        </button>
+      </div>
+    </div>
+    <div id="sidebarFuncao" style="display:none;">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Filtrar por área</div>
+        <button class="filter-btn active" onclick="setFuncaoArea('all')">
+          <span class="filter-dot dot-all"></span> Todas as áreas
+        </button>
+        <button class="filter-btn" onclick="setFuncaoArea('comercial')">
+          <span class="filter-dot dot-funcao"></span> Comercial
+        </button>
+        <button class="filter-btn" onclick="setFuncaoArea('projetos')">
+          <span class="filter-dot dot-funcao"></span> Gestão de Projetos
+        </button>
+        <button class="filter-btn" onclick="setFuncaoArea('codigo')">
+          <span class="filter-dot dot-funcao"></span> Desenvolvimento
+        </button>
+        <button class="filter-btn" onclick="setFuncaoArea('testes')">
+          <span class="filter-dot dot-funcao"></span> Testes e Qualidade
+        </button>
+        <button class="filter-btn" onclick="setFuncaoArea('requisitos')">
+          <span class="filter-dot dot-funcao"></span> Requisitos
+        </button>
+        <button class="filter-btn" onclick="setFuncaoArea('rh')">
+          <span class="filter-dot dot-funcao"></span> RH e Seleção
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="content-header">
+      <div class="result-count" id="resultCount">Mostrando todos os 30 prompts</div>
+    </div>
+    <div id="promptsContainer"></div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-framework" id="modalFramework"></div>
+        <div class="modal-title" id="modalTitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta" id="modalMeta"></div>
+      <div id="modalContent"></div>
+      <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">📋 Copiar prompt</button>
+      <div class="modal-tip" id="modalTip"></div>
+      <div class="modal-funcoes" id="modalFuncoes"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const funcoes = [
+  {id:'analise-editais', nome:'Análise de Editais', area:'comercial'},
+  {id:'proposta-tecnica', nome:'Elaboração de Proposta Técnica e Comercial', area:'comercial'},
+  {id:'auditoria-proposta', nome:'Auditoria de Proposta Comercial', area:'comercial'},
+  {id:'verificacao-edital', nome:'Verificação de Análise de Edital', area:'comercial'},
+  {id:'busca-candidatos', nome:'Busca de Candidatos', area:'rh'},
+  {id:'selecao-candidatos', nome:'Seleção de Candidatos', area:'rh'},
+  {id:'gestao-projetos', nome:'Gestão de Projetos', area:'projetos'},
+  {id:'comunicacao-cliente', nome:'Comunicação com Cliente', area:'projetos'},
+  {id:'estimativas', nome:'Estimativas de Projeto', area:'projetos'},
+  {id:'tomada-decisao', nome:'Tomada de Decisão (DAR)', area:'projetos'},
+  {id:'analise-causa', nome:'Análise de Causa (CAR)', area:'projetos'},
+  {id:'retrospectiva', nome:'Retrospectiva de Projeto', area:'projetos'},
+  {id:'auditoria-processos', nome:'Auditoria de Processos (PAB)', area:'projetos'},
+  {id:'analise-requisitos', nome:'Análise e Revisão de Requisitos', area:'requisitos'},
+  {id:'especificacao-funcional', nome:'Especificação Funcional', area:'requisitos'},
+  {id:'especificacao-tecnica', nome:'Especificação Técnica', area:'codigo'},
+  {id:'arquitetura-sw', nome:'Arquitetura de Software', area:'codigo'},
+  {id:'engenharia-reversa', nome:'Engenharia Reversa', area:'codigo'},
+  {id:'codificacao', nome:'Codificação (ABAP / .Net / Java / SQL)', area:'codigo'},
+  {id:'revisao-codigo', nome:'Revisão de Código', area:'codigo'},
+  {id:'performance', nome:'Melhoria de Performance', area:'codigo'},
+  {id:'planejamento-testes', nome:'Planejamento de Testes', area:'testes'},
+  {id:'casos-teste', nome:'Documentação de Casos de Teste', area:'testes'},
+  {id:'testes-automatizados', nome:'Testes Automatizados', area:'testes'},
+  {id:'rastreabilidade', nome:'Rastreabilidade', area:'testes'},
+];
+
+const prompts = [
+  {id:1,framework:'4Is',type:'estrutural',title:'Análise de Edital de Licitação',grupo:'G5',perfil:'Comercial / Pré-vendas',
+   funcoes:['analise-editais'],
+   content:`🎯 Intenção\nAvaliar se a Ayesa deve concorrer a um edital de licitação para implementação SAP, identificando riscos, oportunidades e requisitos obrigatórios antes de qualquer decisão.\n\n📋 Instrução\nLeia o edital abaixo e entregue:\n1. Resumo executivo: escopo, prazo e valor estimado\n2. Requisitos técnicos obrigatórios (eliminatórios)\n3. Riscos e pontos de atenção\n4. Recomendação final: concorrer ou não, com justificativa objetiva\n\n📂 Informação\n[Cole aqui o texto completo do edital]\n\n🔄 Interação\nSe recomendar concorrer → gere um índice sugerido para a proposta técnica.\nSe recomendar não concorrer → aponte o critério decisivo e sugira o que monitorar para editais futuros semelhantes.`,
+   tip:'Ideal como primeiro prompt ao receber um edital. Use o índice gerado como base para o próximo prompt de elaboração de proposta.'},
+
+  {id:2,framework:'4Is',type:'estrutural',title:'Análise de Causa Raiz (CAR)',grupo:'G2',perfil:'Gerente / Analista de Projetos',
+   funcoes:['analise-causa','gestao-projetos'],
+   content:`🎯 Intenção\nIdentificar a causa raiz de um desvio crítico de prazo em um projeto de implementação SAP, antes da reunião de status com o cliente.\n\n📋 Instrução\nCom base no registro de ocorrências abaixo, conduza uma análise CAR:\n- Causa: o que gerou o problema?\n- Ação: o que foi ou deve ser feito?\n- Resultado: qual o impacto esperado da ação?\n\nApresente em formato de tabela, com linguagem objetiva para compartilhar com o cliente.\n\n📂 Informação\n[Cole aqui os registros de ocorrências do projeto]\n\n🔄 Interação\nApós a tabela CAR, sugira 3 ações preventivas para evitar recorrência em projetos futuros de mesmo porte.`,
+   tip:'Combine com o prompt PIVO de Comunicação de Risco ao Cliente para comunicar os resultados da análise de forma eficaz.'},
+
+  {id:3,framework:'4Is',type:'estrutural',title:'Especificação Funcional a partir de Requisito Informal',grupo:'G2',perfil:'Analista Funcional',
+   funcoes:['especificacao-funcional','analise-requisitos'],
+   content:`🎯 Intenção\nTransformar uma solicitação informal do cliente em uma especificação funcional estruturada, pronta para ser validada e encaminhada para desenvolvimento.\n\n📋 Instrução\nCom base na solicitação abaixo, escreva uma especificação funcional contendo:\n1. Descrição do requisito (linguagem técnica)\n2. Regras de negócio envolvidas\n3. Fluxo principal e fluxos alternativos\n4. Critérios de aceite mensuráveis\n5. Dependências e impactos em outros módulos\n\n📂 Informação\n[Cole aqui a solicitação informal do cliente]\n\n🔄 Interação\nApós a especificação, liste as perguntas que ainda precisam ser respondidas pelo cliente para fechar o requisito sem ambiguidade.`,
+   tip:'Use o Contradiction Scan depois para verificar inconsistências internas antes de enviar para desenvolvimento.'},
+
+  {id:4,framework:'RAIN',type:'estrutural',title:'Estimativa de Esforço de Projeto',grupo:'G2',perfil:'Gerente de Projetos / Pré-vendas',
+   funcoes:['estimativas','gestao-projetos'],
+   content:`🎭 Role\nAtue como um gerente de projetos sênior com mais de 10 anos de experiência em implementações SAP S/4HANA, acostumado a elaborar estimativas para propostas comerciais.\n\n🎯 Aim\nEstimar o esforço necessário para a implementação do escopo descrito abaixo, distribuído por fase e perfil de alocação.\n\n📂 Input\n[Descreva o escopo, número de usuários-chave, integrações e restrições de prazo]\n\n🔢 Numeric Target\nApresente uma tabela com:\n- 4 fases do projeto (Preparação, Blueprint, Realização, Go-live)\n- Esforço em horas por fase e por perfil (Gerente, Consultor Sênior, Consultor Pleno)\n- Total geral de horas e equivalente em meses/homem\n- 3 premissas críticas que sustentam a estimativa`,
+   tip:'Use o Counter Example Hunt em seguida para testar a robustez da estimativa antes de apresentá-la ao cliente.'},
+
+  {id:5,framework:'RAIN',type:'estrutural',title:'Auditoria de Processos (PAB)',grupo:'G2',perfil:'Consultor / Analista de Processos',
+   funcoes:['auditoria-processos'],
+   content:`🎭 Role\nAtue como um auditor sênior de processos de negócio com experiência em projetos SAP, especializado em identificar gaps entre o processo desenhado e o executado.\n\n🎯 Aim\nAvaliar o processo descrito abaixo e identificar desvios, riscos de controle e oportunidades de melhoria.\n\n📂 Input\n[Cole aqui a descrição do processo atual]\n\n🔢 Numeric Target\nEntregue exatamente:\n- 5 desvios identificados em relação às boas práticas SAP\n- 3 riscos de controle priorizados por severidade (Alta / Média / Baixa)\n- 2 recomendações de melhoria imediata (quick wins)`,
+   tip:'Ideal para o início de um PAB. Use o Fact-Checklist depois para validar as afirmações antes de apresentar ao cliente.'},
+
+  {id:6,framework:'RAIN',type:'estrutural',title:'Busca e Atração de Candidatos',grupo:'G5',perfil:'Analista de RH / Gestor',
+   funcoes:['busca-candidatos'],
+   content:`🎭 Role\nAtue como um especialista em recrutamento técnico com experiência em atração de profissionais de TI e consultoria SAP.\n\n🎯 Aim\nCriar uma descrição de vaga atrativa e precisa para publicação no LinkedIn, Gupy e consultorias parceiras.\n\n📂 Input\n[Informe: cargo, requisitos obrigatórios, desejáveis, regime de trabalho e diferenciais da Ayesa]\n\n🔢 Numeric Target\n- Descrição da vaga: máximo 300 palavras\n- Exatamente 5 bullet points de responsabilidades e 5 de requisitos\n- 1 parágrafo de apresentação da Ayesa com no máximo 3 frases`,
+   tip:'Use este prompt para atrair candidatos. Em seguida, use o prompt 4Is de Seleção de Candidatos para triar os currículos recebidos.'},
+
+  {id:7,framework:'RTF',type:'estrutural',title:'Documentação de Casos de Teste',grupo:'G3',perfil:'Analista de QA',
+   funcoes:['casos-teste','testes-automatizados'],
+   content:`🎭 Role\nAtue como um analista de QA sênior com experiência em projetos SAP S/4HANA.\n\n📋 Task\nDocumente os casos de teste para o processo abaixo, cobrindo o fluxo principal e os principais fluxos de exceção.\n\n[Cole aqui a especificação funcional ou descrição do processo]\n\n📄 Format\nEntregue uma tabela com as colunas:\n- ID — identificador sequencial (ex: TC-001)\n- Cenário — descrição curta\n- Pré-condição — o que precisa estar configurado\n- Dados de entrada — o que será inserido\n- Resultado esperado — o que o sistema deve retornar\n- Status — (deixar em branco)`,
+   tip:'Combine com o prompt RTF de Rastreabilidade para cruzar os casos de teste com os requisitos e garantir cobertura completa.'},
+
+  {id:8,framework:'RTF',type:'estrutural',title:'Comunicação de Status ao Cliente',grupo:'G2',perfil:'Gerente de Projetos',
+   funcoes:['comunicacao-cliente','gestao-projetos'],
+   content:`🎭 Role\nAtue como um gerente de projetos experiente, com tom profissional, objetivo e transparente.\n\n📋 Task\nRedija um e-mail de atualização semanal de status do projeto para o cliente, com base nas informações abaixo:\n\n[Informe: semana, atividades concluídas, em andamento, riscos ativos e próximos passos]\n\n📄 Format\nE-mail com:\n- Assunto objetivo\n- Saudação formal\n- 3 seções: ✅ Concluído | 🔄 Em andamento | ⚠️ Pontos de atenção\n- Próximos passos em bullet points\n- Encerramento profissional\n- Máximo de 200 palavras no corpo do e-mail`,
+   tip:'Para situações de crise ou atraso, use o prompt PIVO de Comunicação de Risco ao Cliente — o tom é diferente.'},
+
+  {id:9,framework:'RTF',type:'estrutural',title:'Matriz de Rastreabilidade',grupo:'G3',perfil:'Analista de QA / Analista Funcional',
+   funcoes:['rastreabilidade'],
+   content:`🎭 Role\nAtue como um analista de qualidade sênior com experiência em projetos SAP.\n\n📋 Task\nCom base nos requisitos e casos de teste abaixo, construa uma matriz de rastreabilidade completa.\n\n[Cole aqui a lista de requisitos com seus IDs]\n[Cole aqui a lista de casos de teste com seus IDs]\n\n📄 Format\nTabela com:\n- ID Requisito\n- Descrição do Requisito (resumo em até 10 palavras)\n- ID(s) Caso(s) de Teste\n- Status: ✅ Coberto / ⚠️ Parcial / ❌ Sem cobertura\n\nAo final: total por status e lista de casos de teste órfãos.`,
+   tip:'Entregável essencial para auditorias de qualidade e aprovação de go-live.'},
+
+  {id:10,framework:'RISE',type:'estrutural',title:'Revisão de Código ABAP',grupo:'G4',perfil:'Desenvolvedor Sênior / Tech Lead',
+   funcoes:['revisao-codigo'],
+   content:`🎭 Role\nVocê é um desenvolvedor sênior com experiência em revisão de código ABAP com foco em qualidade, performance e aderência aos padrões da Ayesa.\n\n📂 Input\n[Cole aqui o trecho de código ABAP a ser revisado]\n\n🪜 Steps\n1. Identifique problemas de lógica ou erros funcionais\n2. Avalie performance (loops desnecessários, SELECT sem filtro, etc.)\n3. Verifique aderência aos padrões de nomenclatura\n4. Aponte riscos de segurança ou integridade de dados\n5. Sugira refatorações com o código corrigido\n\n✅ Expectation\nSer objetiva e acionável, priorizar por criticidade (🔴 Crítico / 🟡 Atenção / 🟢 Sugestão) e não reescrever o que já está correto.`,
+   tip:'Funciona para ABAP, .Net, Java e SQL. Ajuste o Role para a linguagem específica.'},
+
+  {id:11,framework:'RISE',type:'estrutural',title:'Engenharia Reversa de Código',grupo:'G4',perfil:'Desenvolvedor Sênior / Arquiteto',
+   funcoes:['engenharia-reversa'],
+   content:`🎭 Role\nVocê é um desenvolvedor sênior especializado em engenharia reversa de sistemas legados SAP/ABAP.\n\n📂 Input\n[Cole aqui o código ABAP, .Net, Java ou SQL a ser analisado]\n\n🪜 Steps\n1. Identifique o propósito geral em linguagem de negócio\n2. Mapeie os principais componentes: entradas, processamento e saídas\n3. Identifique as tabelas, objetos ou APIs utilizados\n4. Descreva o fluxo de execução em linguagem funcional\n5. Identifique dependências externas e riscos de manutenção\n6. Produza um resumo de documentação para o cabeçalho\n\n✅ Expectation\nCompreensível por um analista funcional. Dispensa a necessidade de reler o código para entender o processo.`,
+   tip:'Indispensável para projetos de migração ou manutenção de sistemas legados sem documentação.'},
+
+  {id:12,framework:'FLOW',type:'estrutural',title:'Tomada de Decisão (DAR)',grupo:'G2',perfil:'Gerente de Projetos / Arquiteto',
+   funcoes:['tomada-decisao','arquitetura-sw'],
+   content:`⚙️ Function\nAvaliar alternativas de solução técnica e recomendar a mais adequada.\n\n📊 Level\nProfundidade técnica sênior — custo total, riscos de integração e sustentabilidade a longo prazo.\n\n📤 Output\nMatriz de decisão comparativa com:\n- Critérios de avaliação (custo, prazo, complexidade, risco)\n- Pontuação de cada alternativa por critério (escala 1–5)\n- Justificativa para cada pontuação\n- Recomendação final com argumentação objetiva\n\n[Descreva aqui as alternativas e o contexto do projeto]\n\n🏆 Win Metric\nA recomendação deve ser única e clara (sem "depende"), e qualquer gerente de projeto deve conseguir justificá-la para o cliente com base na matriz.`,
+   tip:'Use o Counter Example Hunt depois para testar se a decisão se sustenta com a perspectiva oposta.'},
+
+  {id:13,framework:'PIVO',type:'estrutural',title:'Comunicação de Risco ao Cliente',grupo:'G2',perfil:'Gerente de Projetos',
+   funcoes:['comunicacao-cliente','gestao-projetos'],
+   content:`⚠️ Problem\n[Descreva o risco materializado: o que aconteceu, qual o impacto no prazo/escopo/custo]\n\n💡 Insight\nRaciocínio de gerente de crise experiente — antecipe perguntas difíceis, não minimize o problema, mas apresente o caminho de solução com clareza e controle.\n\n🗣️ Voice\nTom transparente, direto e orientado a soluções. A mensagem deve transmitir controle sem soar defensivo.\n\n🏁 Outcome\nE-mail curto (máximo 150 palavras) comunicando o risco ao cliente, com a causa resumida, o impacto real e os próximos passos concretos.`,
+   tip:'Use o RTF de Status Semanal para comunicações rotineiras. Reserve o PIVO para situações sensíveis onde o tom é crítico.'},
+
+  {id:14,framework:'PLAN',type:'estrutural',title:'Melhoria de Performance SAP',grupo:'G4',perfil:'Arquiteto / Consultor Técnico Sênior',
+   funcoes:['performance','codificacao'],
+   content:`⚠️ Problem\n[Descreva o problema: tempo atual de execução, volume de dados, transação/relatório afetado]\n\n🔒 Limit\nProponha no máximo 3 alternativas de otimização, da mais simples para a mais complexa.\n\n⚡ Action\nPara cada alternativa:\n1. Descreva a intervenção técnica (índice, query, refatoração, paralelização etc.)\n2. Estime o esforço em horas de desenvolvimento\n3. Indique se requer downtime ou pode ser aplicada sem interrupção\n\n🔢 Number\nEstime o tempo de execução esperado após cada melhoria e destaque qual combinação atinge o target de performance definido.`,
+   tip:'Defina o target de performance antes de rodar o prompt para que o Number seja calculado corretamente.'},
+
+  {id:15,framework:'ROSE',type:'estrutural',title:'Elaboração de Proposta Técnica e Comercial',grupo:'G5',perfil:'Consultor de Pré-vendas',
+   funcoes:['proposta-tecnica'],
+   content:`🎭 Role\nAja como um consultor de pré-vendas sênior da Ayesa, com experiência em propostas para projetos SAP.\n\n🎯 Objective\nElaborar uma proposta técnica e comercial convincente para a oportunidade descrita.\n\n[Descreva: setor do cliente, porte, escopo, prazo desejado e principal preocupação]\n\n🪜 Steps\n1. Resumo executivo conectando o desafio à solução proposta\n2. Abordagem metodológica da Ayesa\n3. Escopo técnico e fases de implementação\n4. Cases ou referências relevantes\n5. Modelo de equipe e perfis alocados\n6. Próximos passos e call to action\n\n📦 Expected Result\nDocumento que o cliente leia em até 10 minutos, com tom consultivo — não comercial agressivo.`,
+   tip:'Fluxo: ROSE (gerar) → Iterative (refinar) → Team Prompting (revisar) → Fact-Checklist (auditar) → Contradiction Scan (verificar).'},
+
+  {id:16,framework:'Chain-of-Thought',type:'cognitivo',title:'Debug de Erro em ABAP',grupo:'G4',perfil:'Desenvolvedor ABAP',
+   funcoes:['codificacao','revisao-codigo'],
+   content:`Analise o código ABAP abaixo que está gerando um erro em produção.\n\nPense passo a passo:\n1. Identifique o que o código está tentando fazer\n2. Mapeie o fluxo de execução linha a linha\n3. Identifique onde o erro pode estar ocorrendo e por quê\n4. Proponha a correção com explicação técnica\n5. Indique como testar se a correção resolveu o problema\n\nExplique cada etapa antes de passar para a próxima.\n\n[Cole aqui o código ABAP com o erro e a mensagem de dump]`,
+   tip:'O Chain-of-Thought evita soluções precipitadas — o raciocínio passo a passo expõe a causa real antes de propor correção.'},
+
+  {id:17,framework:'Chain-of-Thought',type:'cognitivo',title:'Validação de Estimativa de Concorrente',grupo:'G2',perfil:'Gerente de Projetos / PMO',
+   funcoes:['estimativas','gestao-projetos'],
+   content:`O cliente recebeu uma proposta de um concorrente para implementar SAP S/4HANA em [X meses] com equipe de [Y consultores]. Preciso saber se essa estimativa é realista antes da reunião de negociação.\n\nAntes de concluir, pense passo a passo:\n1. Quais são as entregas mínimas de um projeto desse escopo?\n2. Qual o esforço típico de cada fase?\n3. Quantas horas úteis a equipe tem no período?\n4. O que precisaria ser verdade para essa estimativa ser viável?\n5. É realista, otimista ou inviável?\n\nMostre os cálculos e premissas em cada etapa antes do veredicto final.`,
+   tip:'Transforma a estimativa do concorrente em argumento técnico fundamentado para a reunião de negociação.'},
+
+  {id:18,framework:'Socratic',type:'cognitivo',title:'Levantamento de Requisitos com Cliente',grupo:'G2',perfil:'Analista Funcional',
+   funcoes:['analise-requisitos'],
+   content:`Um usuário-chave descreveu o seguinte requisito:\n\n[Cole aqui a solicitação informal do cliente]\n\nAntes de especificá-lo, faça as perguntas certas para entender o que o cliente realmente precisa.\n\nInstruções:\n- Gere entre 8 e 10 perguntas que um analista sênior faria\n- Organize por categoria: escopo, dados, usuários, frequência, formato\n- Para cada pergunta, explique em uma linha por que ela é importante\n- Ao final, indique as 3 mais críticas para não começar sem resposta`,
+   tip:'Use ANTES de especificar qualquer requisito. Economiza retrabalho ao expor o que o cliente realmente precisa vs. o que pediu.'},
+
+  {id:19,framework:'Socratic',type:'cognitivo',title:'Questionamento de Escopo de Projeto',grupo:'G2',perfil:'Gerente de Projetos / PMO',
+   funcoes:['gestao-projetos','estimativas'],
+   content:`O cliente apresentou o seguinte escopo:\n\n[Cole aqui a declaração de escopo]\n\nAtue como um gerente de projetos sênior questionando esse escopo antes de assinar qualquer proposta.\n\nInstruções:\n- Identifique todas as premissas implícitas e potencialmente problemáticas\n- Para cada premissa, formule uma pergunta direta\n- Questione também o que está faltando na declaração\n- Finalize: o que precisaria mudar — escopo, prazo ou orçamento — para esse projeto ser viável`,
+   tip:'Indispensável antes de fechar contratos. Premissas implícitas são a principal fonte de conflito em projetos SAP.'},
+
+  {id:20,framework:'Meta-Cognition',type:'cognitivo',title:'Revisão Crítica de Proposta Comercial',grupo:'G5',perfil:'Gerente Comercial / Pré-vendas',
+   funcoes:['auditoria-proposta','proposta-tecnica'],
+   content:`Elabore uma proposta executiva de 1 página para o seguinte contexto:\n\n[Descreva: cliente, escopo, prazo e diferencial da Ayesa]\n\nApós escrever a proposta, revise criticamente sua própria resposta:\n1. Quais afirmações fiz sem informações suficientes para sustentá-las?\n2. Que argumentos um concorrente usaria para refutá-la?\n3. O que um cliente exigente provavelmente perguntaria?\n4. Qual é o ponto mais fraco como está?`,
+   tip:'O Meta-Cognition transforma o modelo no seu próprio revisor — use antes de apresentar qualquer proposta ao cliente.'},
+
+  {id:21,framework:'Meta-Cognition',type:'cognitivo',title:'Auditoria de Matriz de Riscos',grupo:'G2',perfil:'Gerente de Projetos / PMO',
+   funcoes:['gestao-projetos'],
+   content:`Gere uma matriz de riscos para o seguinte projeto:\n\n[Descreva: tipo de projeto, porte, tecnologias e principais restrições]\n\nIncluindo: risco, probabilidade (A/M/B), impacto (A/M/B), plano de mitigação.\n\nApós gerar a matriz, questione seu próprio trabalho:\n1. Que riscos provavelmente esqueci por serem menos óbvios?\n2. Minhas avaliações têm viés? Em qual direção?\n3. Quais planos de mitigação são genéricos demais?\n4. O que um gerente com cicatriz em projetos SAP adicionaria?`,
+   tip:'Use no início do projeto para não depender apenas da experiência da equipe na identificação de riscos.'},
+
+  {id:22,framework:'Iterative Prompting',type:'cognitivo',title:'Refinamento de Proposta Técnica',grupo:'G5',perfil:'Consultor de Pré-vendas',
+   funcoes:['proposta-tecnica'],
+   content:`RODADA 1 — Esboço inicial\nGere um esboço de proposta para o escopo abaixo. Quero ver a estrutura e os argumentos principais.\n[Descreva o escopo]\n\n---\nRODADA 2 — Refinamento\n- Torne a linguagem mais executiva (leitor: CFO, não TI)\n- Reduza jargão técnico SAP\n- Reforce benefícios financeiros e de prazo\n\n---\nRODADA 3 — Adaptação ao cliente\nAdapte para um cliente que já tentou implementar SAP e falhou. Explique por que com a Ayesa será diferente.\n\n---\nRODADA 4 — Detalhamento\nAprofunde apenas a seção de metodologia — rigor sem soar burocrático.`,
+   tip:'Salve o prompt de cada rodada — eles se tornam templates reutilizáveis.'},
+
+  {id:23,framework:'Iterative Prompting',type:'cognitivo',title:'Geração de Código Incremental ABAP',grupo:'G4',perfil:'Desenvolvedor ABAP',
+   funcoes:['codificacao'],
+   content:`RODADA 1 — Estrutura base\nCrie a estrutura base de um programa ABAP para [descreva o objetivo] — apenas o esqueleto com seleção de dados e ALV básico.\n\n---\nRODADA 2 — Lógica de negócio\nAgora adicione:\n[Descreva as regras de negócio]\n\n---\nRODADA 3 — Otimização\nO programa está correto mas lento em volumes acima de [X] registros. Otimize:\n- Substitua SELECTs aninhados por JOIN ou FOR ALL ENTRIES\n- Adicione índices recomendados nos comentários\n\n---\nRODADA 4 — Documentação\nAdicione comentários no padrão da Ayesa: cabeçalho com autor, data, descrição e histórico; comentários inline nas regras de negócio críticas.`,
+   tip:'Nunca peça o programa completo de uma vez — a geração incremental produz código mais limpo e fácil de revisar.'},
+
+  {id:24,framework:'Iterative Prompting',type:'cognitivo',title:'Refinamento de Casos de Teste',grupo:'G3',perfil:'Analista de QA',
+   funcoes:['planejamento-testes','casos-teste','testes-automatizados'],
+   content:`RODADA 1 — Cobertura básica\nGere os casos de teste principais para o processo abaixo. Foque no fluxo principal.\n[Descreva o processo]\n\n---\nRODADA 2 — Exceções\nAgora adicione os cenários de exceção mais críticos:\n[Liste os cenários de exceção relevantes]\n\n---\nRODADA 3 — Automação\nReescreva os 5 casos mais críticos no formato Gherkin (Given / When / Then) para automação.\n\n---\nRODADA 4 — Priorização para go-live\nSelecione os 10 mais críticos para execução obrigatória antes do go-live, justificando por risco de negócio.`,
+   tip:'A Rodada 3 gera casos prontos para Robot Framework. A Rodada 4 é essencial na reta final de projetos com prazo apertado.'},
+
+  {id:25,framework:'Team Prompting',type:'cognitivo',title:'Avaliação de Proposta — 4 Perspectivas',grupo:'G5',perfil:'Gerente Comercial / Pré-vendas',
+   funcoes:['auditoria-proposta','proposta-tecnica'],
+   content:`Avalie a proposta abaixo assumindo simultaneamente quatro perspectivas:\n\n👤 CFO do Cliente — ROI, custo total, riscos financeiros, prazo de retorno. Cético com promessas vagas.\n\n👤 Gerente de TI do Cliente — integração com sistemas legados, risco de dependência do fornecedor.\n\n👤 Consultor Sênior da Ayesa — viabilidade do escopo, clareza das responsabilidades e proteção contratual.\n\n👤 Advogado Contratual — ambiguidades que podem gerar disputas, cláusulas ausentes, responsabilidades mal definidas.\n\nPara cada papel, liste as 3 principais objeções ou lacunas.\nAo final, sintetize as 5 mudanças mais urgentes antes do envio.\n\n[Cole aqui o texto da proposta]`,
+   tip:'Simula uma revisão que normalmente exigiria 4 reuniões — use antes de qualquer proposta estratégica.'},
+
+  {id:26,framework:'Team Prompting',type:'cognitivo',title:'Retrospectiva de Projeto',grupo:'G2',perfil:'Gerente de Projetos / PMO',
+   funcoes:['retrospectiva','gestao-projetos'],
+   content:`Um projeto foi encerrado com desvios de prazo e/ou orçamento. Conduza uma retrospectiva assumindo três perspectivas:\n\n👤 Gerente de Projetos da Ayesa — planejamento, gestão de riscos e comunicação.\n\n👤 Líder Técnico — estimativa técnica, débito técnico e qualidade das entregas.\n\n👤 Representante do Cliente — o que gerou insatisfação, o que funcionou bem e o que esperava mas não recebeu.\n\nPara cada perspectiva: 3 causas dos desvios e o que faria diferente.\n\nAo final: 5 lições aprendidas mais críticas.\n\n[Descreva os desvios e o contexto do projeto]`,
+   tip:'Use logo após o encerramento. As lições geradas são insumo para o próximo plano de projeto.'},
+
+  {id:27,framework:'Fact-Checklist',type:'verificacao',title:'Auditoria de Proposta Comercial',grupo:'G5',perfil:'Gerente Comercial',
+   funcoes:['auditoria-proposta','verificacao-edital'],
+   content:`Leia a proposta abaixo e aplique o Fact-Checklist:\n\n1. Liste todas as afirmações factuais (dados, benchmarks, promessas de prazo, ROI etc.)\n\n2. Classifique cada afirmação:\n   ✅ Verificável — dado concreto com fonte conhecida\n   ⚠️ Estimativa — razoável mas sem fonte explícita\n   ❌ Sem suporte — não pode ser sustentada sem evidência\n\n3. Para as ❌, sugira como reformular sem comprometer a credibilidade\n\n[Cole aqui o texto da proposta]`,
+   tip:'Execute ANTES de enviar qualquer proposta ao cliente. Afirmações sem suporte prejudicam a credibilidade da Ayesa.'},
+
+  {id:28,framework:'Fact-Checklist',type:'verificacao',title:'Verificação de Análise de Edital',grupo:'G5',perfil:'Analista de Licitações',
+   funcoes:['verificacao-edital','analise-editais'],
+   content:`A análise de edital abaixo foi gerada automaticamente. Antes de usá-la como base para decisão de concorrência, aplique o Fact-Checklist:\n\n1. Os requisitos técnicos eliminatórios foram extraídos corretamente ou podem ter sido inferidos?\n\n2. Os prazos e valores batem com o documento original?\n\n3. Quais afirmações sobre a posição da Ayesa precisariam ser confirmadas internamente?\n\n4. Quais são as 3 afirmações de maior risco se estiverem erradas?\n\n[Cole aqui a análise gerada]\n[Cole aqui o edital original para comparação]`,
+   tip:'Nunca tome decisão de concorrência baseada apenas na análise da IA — sempre verifique contra o documento original.'},
+
+  {id:29,framework:'Contradiction Scan',type:'verificacao',title:'Inconsistências em Proposta: Escopo × Cronograma',grupo:'G5',perfil:'Gerente de Projetos / Comercial',
+   funcoes:['proposta-tecnica','auditoria-proposta'],
+   content:`Antes de enviar a proposta abaixo, aplique o Contradiction Scan:\n\n1. O escopo descrito é compatível com o prazo proposto?\n2. Os recursos alocados são suficientes para o escopo no prazo indicado?\n3. Há afirmações na seção comercial que contradizem restrições da seção técnica?\n4. Os critérios de aceite são coerentes com as entregas descritas?\n5. Liste cada contradição com a referência exata das seções conflitantes\n\n[Cole aqui o texto completo da proposta]`,
+   tip:'Proposals com contradições internas são uma das principais causas de conflito contratual. Execute SEMPRE antes de enviar.'},
+
+  {id:30,framework:'Counter Example Hunt',type:'verificacao',title:'Robustez de Estimativa de Projeto',grupo:'G2',perfil:'Gerente de Projetos / PMO',
+   funcoes:['estimativas','gestao-projetos'],
+   content:`A estimativa de [X meses] para o projeto abaixo será apresentada ao cliente amanhã.\n\nAntes da apresentação, aplique o Counter Example Hunt:\n\n1. Busque projetos de escopo similar que não foram entregues no prazo — quais foram as causas mais comuns?\n\n2. Identifique as 3 premissas mais frágeis dessa estimativa\n\n3. Construa o pior cenário plausível — não o catastrófico, mas o realista\n\n4. Proponha as cláusulas de proteção que deveriam estar no contrato\n\n5. A estimativa ainda é defensável? Ou deveria ser apresentada com um buffer explícito?\n\n[Descreva o escopo e as premissas da estimativa]`,
+   tip:'Use ANTES de apresentar estimativas. Revelar fragilidades internamente é melhor do que o cliente descobrir depois.'},
+];
+
+let currentView = 'framework';
+let currentFilter = 'all';
+let currentSearch = '';
+let currentPrompt = null;
+let currentFuncaoArea = 'all';
+let selectedFuncao = null;
+
+function setView(view, btn) {
+  currentView = view;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sidebarFramework').style.display = view === 'framework' ? '' : 'none';
+  document.getElementById('sidebarFuncao').style.display = view === 'funcao' ? '' : 'none';
+  selectedFuncao = null;
+  render();
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('#sidebarFramework .filter-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  render();
+}
+
+function setFuncaoArea(area) {
+  currentFuncaoArea = area;
+  selectedFuncao = null;
+  document.querySelectorAll('#sidebarFuncao .filter-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  render();
+}
+
+function onSearch() {
+  currentSearch = document.getElementById('searchInput').value.toLowerCase();
+  render();
+}
+
+function getFilteredPrompts() {
+  return prompts.filter(p => {
+    const matchSearch = !currentSearch ||
+      p.title.toLowerCase().includes(currentSearch) ||
+      p.framework.toLowerCase().includes(currentSearch) ||
+      p.perfil.toLowerCase().includes(currentSearch) ||
+      (p.funcoes || []).some(f => {
+        const fn = funcoes.find(x => x.id === f);
+        return fn && fn.nome.toLowerCase().includes(currentSearch);
+      });
+    const matchFilter = currentFilter === 'all' || p.type === currentFilter;
+    return matchSearch && matchFilter;
+  });
+}
+
+function getFuncaoPrompts(funcaoId) {
+  return prompts.filter(p => (p.funcoes || []).includes(funcaoId));
+}
+
+function getTypeLabel(type) {
+  return {estrutural:'Estrutural', cognitivo:'Cognitivo', verificacao:'Verificação'}[type] || type;
+}
+
+function render() {
+  if (currentView === 'framework') renderFramework();
+  else renderFuncao();
+}
+
+function renderFramework() {
+  const filtered = getFilteredPrompts();
+  const container = document.getElementById('promptsContainer');
+  document.getElementById('resultCount').textContent =
+    filtered.length === prompts.length ? `Mostrando todos os ${prompts.length} prompts` :
+    `${filtered.length} prompt${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
+
+  if (!filtered.length) { container.innerHTML = noResults(); return; }
+
+  const groups = {};
+  filtered.forEach(p => {
+    if (!groups[p.framework]) groups[p.framework] = {type: p.type, prompts: []};
+    groups[p.framework].prompts.push(p);
+  });
+
+  container.innerHTML = Object.entries(groups).map(([fw, g]) => `
+    <div class="category-section">
+      <div class="category-header">
+        <span class="category-tag tag-${g.type}">${getTypeLabel(g.type)}</span>
+        <span class="category-name">${fw}</span>
+      </div>
+      <div class="cards-grid">
+        ${g.prompts.map(p => cardHtml(p)).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function renderFuncao() {
+  const container = document.getElementById('promptsContainer');
+
+  if (selectedFuncao) {
+    const fn = funcoes.find(f => f.id === selectedFuncao);
+    const fps = getFuncaoPrompts(selectedFuncao).filter(p => {
+      if (!currentSearch) return true;
+      return p.title.toLowerCase().includes(currentSearch) || p.framework.toLowerCase().includes(currentSearch);
+    });
+
+    document.getElementById('resultCount').textContent = `${fps.length} prompt${fps.length !== 1 ? 's' : ''} para "${fn.nome}"`;
+
+    container.innerHTML = `
+      <div class="funcao-results-header">
+        <span class="funcao-results-title">${fn.nome}</span>
+        <button class="funcao-back-btn" onclick="backToFuncoes()">← Ver todas as funções</button>
+      </div>
+      <div class="cards-grid">
+        ${fps.length ? fps.map(p => cardHtml(p)).join('') : '<p style="color:var(--text-muted);font-size:13px;padding:1rem 0">Nenhum prompt encontrado para esta função.</p>'}
+      </div>`;
+    return;
+  }
+
+  const filtered = currentFuncaoArea === 'all' ? funcoes :
+    funcoes.filter(f => f.area === currentFuncaoArea);
+
+  const searchFiltered = !currentSearch ? filtered :
+    filtered.filter(f => f.nome.toLowerCase().includes(currentSearch) ||
+      getFuncaoPrompts(f.id).some(p => p.title.toLowerCase().includes(currentSearch)));
+
+  document.getElementById('resultCount').textContent = `${searchFiltered.length} função${searchFiltered.length !== 1 ? 'ões' : ''} disponíve${searchFiltered.length !== 1 ? 'is' : 'l'}`;
+
+  container.innerHTML = `
+    <div class="funcao-grid">
+      ${searchFiltered.map(f => {
+        const count = getFuncaoPrompts(f.id).length;
+        return `<div class="funcao-card" onclick="selectFuncao('${f.id}')">
+          <div class="funcao-card-name">${f.nome}</div>
+          <div class="funcao-card-count">${count} prompt${count !== 1 ? 's' : ''} disponíve${count !== 1 ? 'is' : 'l'}</div>
+          <div class="funcao-card-arrow">Ver prompts →</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+function selectFuncao(id) {
+  selectedFuncao = id;
+  render();
+}
+
+function backToFuncoes() {
+  selectedFuncao = null;
+  render();
+}
+
+function cardHtml(p) {
+  const fnLabels = (p.funcoes || []).map(fid => {
+    const fn = funcoes.find(f => f.id === fid);
+    return fn ? `<span class="funcao-tag-pill">${fn.nome}</span>` : '';
+  }).join('');
+
+  return `<div class="card card-${p.type}" onclick="openModal(${p.id})">
+    <div class="card-framework">${p.framework}</div>
+    <div class="card-title">${p.title}</div>
+    <div class="card-meta">
+      <span class="card-tag">${p.grupo}</span>
+      <span class="card-arrow">→</span>
+    </div>
+    ${currentView === 'framework' ? `<div class="funcao-tags">${fnLabels}</div>` : ''}
+  </div>`;
+}
+
+function noResults() {
+  return `<div class="no-results"><div class="no-results-icon">🔍</div><p style="font-weight:500;margin-bottom:4px">Nenhum prompt encontrado</p><p style="font-size:13px;color:var(--text-light)">Tente buscar por outro termo ou remova o filtro</p></div>`;
+}
+
+function openModal(id) {
+  const p = prompts.find(x => x.id === id);
+  if (!p) return;
+  currentPrompt = p;
+
+  document.getElementById('modalFramework').textContent = p.framework + ' · ' + getTypeLabel(p.type);
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalMeta').innerHTML = `
+    <span class="modal-badge tag-${p.type}">${getTypeLabel(p.type)}</span>
+    <span class="modal-badge" style="background:var(--bg);color:var(--text-muted)">${p.grupo}</span>
+    <span class="modal-badge" style="background:var(--bg);color:var(--text-muted)">${p.perfil}</span>`;
+  document.getElementById('modalContent').innerHTML = `
+    <div class="prompt-block">
+      <div class="prompt-block-label">📝 Prompt</div>
+      <div class="prompt-block-text">${p.content}</div>
+    </div>`;
+  document.getElementById('modalTip').innerHTML = `<strong>💡 Dica de uso:</strong> ${p.tip}`;
+
+  const fnLabels = (p.funcoes || []).map(fid => {
+    const fn = funcoes.find(f => f.id === fid);
+    return fn ? `<span class="modal-funcao-pill">${fn.nome}</span>` : '';
+  }).join('');
+
+  document.getElementById('modalFuncoes').innerHTML = fnLabels ? `
+    <div class="modal-funcoes-title">Funções relacionadas</div>
+    <div class="modal-funcoes-pills">${fnLabels}</div>` : '';
+
+  document.getElementById('copyBtn').className = 'copy-btn';
+  document.getElementById('copyBtn').textContent = '📋 Copiar prompt';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalBtn(); }
+function closeModalBtn() { document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+function copyPrompt() {
+  if (!currentPrompt) return;
+  navigator.clipboard.writeText(currentPrompt.content).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.className = 'copy-btn copied';
+    btn.textContent = '✅ Copiado!';
+    setTimeout(() => { btn.className = 'copy-btn'; btn.textContent = '📋 Copiar prompt'; }, 2000);
+  });
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+render();
+</script>
+</body>
+</html>
