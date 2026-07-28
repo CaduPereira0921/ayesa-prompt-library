@@ -177,7 +177,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
       <div class="logo-sub">ibp solutions × Ayesa</div>
     </div>
   </div>
-  <div class="header-badge">v2.0 · Workshop 1</div>
+  <div class="header-badge">v3.0 · Workshop 1</div>
 </header>
 
 <nav class="lib-nav">
@@ -290,7 +290,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
         <div class="sidebar-title">Filtrar por Área</div>
         <button class="filter-btn active" onclick="setAutoFilter('all',event)">
           <span class="filter-dot dot-all"></span> Todas as áreas
-          <span class="filter-count">4</span>
+          <span class="filter-count">5</span>
         </button>
         <button class="filter-btn" onclick="setAutoFilter('projetos',event)">
           <span class="filter-dot dot-auto"></span> Gestão de Projetos
@@ -306,7 +306,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
         </button>
         <button class="filter-btn" onclick="setAutoFilter('rh',event)">
           <span class="filter-dot dot-auto"></span> RH e Seleção
-          <span class="filter-count">1</span>
+          <span class="filter-count">2</span>
         </button>
       </div>
     </div>
@@ -1070,6 +1070,52 @@ Gere um documento executivo de 1 página com:
 
 Formato final: linguagem direta, sem jargão de RH.
 Não tome a decisão pela empresa — apresente evidências para que o gestor valide.`
+  },
+  {
+    id:5, nome:'Busca e Organização de Pipeline de Candidatos',
+    ferramenta:'Cowork', area:'rh', areaLabel:'RH e Seleção',
+    quando:'Ao receber currículos de candidatos vindos de fontes diferentes (PDF, Upwork, e-mail) e precisar padronizar, anonimizar e consolidar em um pipeline único.',
+    passos:`Você é um especialista em organização de pipeline de talentos
+da Ayesa Brasil.
+
+Nesta pasta há currículos de candidatos vindos de 3 fontes diferentes:
+- CVs em PDF (candidatos que aplicaram diretamente ou vieram do LinkedIn)
+- Perfis exportados do Upwork
+- Candidaturas recebidas por e-mail (anexos ou texto colado)
+
+Cada fonte está em um formato diferente. Execute o seguinte processo:
+
+ETAPA 1 — LEITURA
+Leia todos os arquivos de currículo desta pasta,
+independente do formato de origem.
+
+ETAPA 2 — PADRONIZAÇÃO E ANONIMIZAÇÃO
+Para cada candidato:
+1. Renomeie no padrão Candidato_[N]_GPSênior
+   (substitua [N] por A, B, C... em ordem de leitura)
+2. Substitua nome completo, CPF, e-mail e telefone
+   por "Candidato A", "Candidato B" etc. — nunca inclua
+   esses dados no resultado final.
+
+ETAPA 3 — EXTRAÇÃO DE DADOS
+Para cada candidato, extraia:
+- Anos de experiência total
+- Número de go-lives SAP completos
+- Certificações ativas
+- Idiomas e nível de proficiência
+- Pretensão salarial (normalize em faixa: mínimo–máximo)
+
+ETAPA 4 — MONTAGEM DO PIPELINE
+Gere uma planilha com:
+- Uma linha por candidato
+- Colunas: Candidato | Exp. | Go-lives | Certificação |
+  Idioma | Pretensão | Fonte de origem (LinkedIn/Upwork/E-mail)
+- Uma coluna adicional de "Fit por critério" comparando
+  cada candidato com os requisitos da vaga de
+  Gerente de Projetos Sênior (ERP / Transformação Digital)
+
+Formato final: planilha .xlsx pronta para envio ao
+Diretor de Operações — sem nenhum dado pessoal exposto.`
   },
 ];
 
