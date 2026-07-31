@@ -194,7 +194,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
     <input type="text" id="searchInput" placeholder="Buscar por atividade, framework ou tema..." oninput="onSearch()">
   </div>
   <div class="stats" id="heroStats">
-    <div class="stat"><div class="stat-num" id="stat1Num">30</div><div class="stat-label" id="stat1Label">Prompts</div></div>
+    <div class="stat"><div class="stat-num" id="stat1Num">31</div><div class="stat-label" id="stat1Label">Prompts</div></div>
     <div class="stat"><div class="stat-num" id="stat2Num">13</div><div class="stat-label" id="stat2Label">Frameworks</div></div>
     <div class="stat" id="stat3Wrap"><div class="stat-num" id="stat3Num">17</div><div class="stat-label" id="stat3Label">Atividades</div></div>
   </div>
@@ -217,16 +217,16 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
           <div class="sidebar-title">Visualizar</div>
           <button class="filter-btn active" onclick="setFilter('all')" id="btn-all">
             <span class="filter-dot dot-all"></span> Todos os prompts
-            <span class="filter-count">30</span>
+            <span class="filter-count">31</span>
           </button>
         </div>
         <div class="sidebar-section">
           <div class="sidebar-title">Por Tipo</div>
           <button class="filter-btn" onclick="setFilter('estrutural')">
-            <span class="filter-dot dot-estrutural"></span> Estruturais <span class="filter-count">14</span>
+            <span class="filter-dot dot-estrutural"></span> Estruturais <span class="filter-count">16</span>
           </button>
           <button class="filter-btn" onclick="setFilter('cognitivo')">
-            <span class="filter-dot dot-cognitivo"></span> Cognitivos <span class="filter-count">12</span>
+            <span class="filter-dot dot-cognitivo"></span> Cognitivos <span class="filter-count">11</span>
           </button>
           <button class="filter-btn" onclick="setFilter('verificacao')">
             <span class="filter-dot dot-verificacao"></span> Verificação <span class="filter-count">4</span>
@@ -315,7 +315,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
 
   <main class="content">
     <div class="content-header">
-      <div class="result-count" id="resultCount">Mostrando todos os 30 prompts</div>
+      <div class="result-count" id="resultCount">Mostrando todos os 31 prompts</div>
     </div>
     <div id="mainContainer"></div>
   </main>
@@ -493,6 +493,10 @@ const prompts = [
    funcoes:['estimativas','gestao-projetos'],
    content:`A estimativa de [X meses] para o projeto abaixo será apresentada ao cliente amanhã.\n\nAntes da apresentação, aplique o Counter Example Hunt:\n\n1. Busque projetos de escopo similar que não foram entregues no prazo — quais foram as causas mais comuns?\n\n2. Identifique as 3 premissas mais frágeis dessa estimativa\n\n3. Construa o pior cenário plausível — não o catastrófico, mas o realista\n\n4. Proponha as cláusulas de proteção que deveriam estar no contrato\n\n5. A estimativa ainda é defensável? Ou deveria ser apresentada com um buffer explícito?\n\n[Descreva o escopo e as premissas da estimativa]`,
    tip:'Use ANTES de apresentar estimativas. Revelar fragilidades internamente é melhor do que o cliente descobrir depois.'},
+  {id:31,framework:'ROSE',type:'estrutural',title:'Elaboração de Proposta Comercial a partir de Anotações de Call (Logística)',grupo:'G5',perfil:'Consultor de Pré-vendas',
+   funcoes:['proposta-tecnica'],
+   content:`🎭 Role\nAja como consultor de pré-vendas sênior da Ayesa, especialista em projetos de ERP para logística.\n\n🎯 Objective\nCom base nas anotações da call abaixo, elabore o rascunho da proposta comercial para [CLIENTE] nas 8 seções padrão Ayesa. Abra com uma narrativa de transformação (situação atual → resultado esperado) antes de qualquer seção técnica.\n\n[Cole aqui as anotações da call]\n\n🪜 Steps\n1. Leia as anotações e identifique: dores declaradas, requisitos obrigatórios e restrições de prazo/budget\n2. Abra com narrativa: antes (dor) → depois (resultado)\n3. Preencha as seções: Resumo Executivo / Entendimento do Desafio / Solução Proposta / Escopo / Cronograma / Equipe / Investimento / Próximos Passos\n4. Em Investimento: use faixas, nunca valor único\n5. Sinalize com [PREENCHER] onde faltar informação\n\n📦 Expected Result\nRascunho em Markdown estruturado, pronto para revisão humana e para alimentar o Cowork. Cliente sempre referenciado como [CLIENTE].`,
+   tip:'Especializado em oportunidades de logística originadas de call. Para propostas mais genéricas, use o ROSE de Elaboração de Proposta Técnica e Comercial.'},
 ];
 
 // ===== DATA: SKILLS =====
