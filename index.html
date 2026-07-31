@@ -267,11 +267,15 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
         <div class="sidebar-title">Filtrar por Área</div>
         <button class="filter-btn active" onclick="setSkillFilter('all',event)">
           <span class="filter-dot dot-all"></span> Todas as áreas
-          <span class="filter-count">13</span>
+          <span class="filter-count">14</span>
         </button>
         <button class="filter-btn" onclick="setSkillFilter('licitacoes',event)">
           <span class="filter-dot dot-skill"></span> Comercial / Licitações
           <span class="filter-count">3</span>
+        </button>
+        <button class="filter-btn" onclick="setSkillFilter('propostas',event)">
+          <span class="filter-dot dot-skill"></span> Comercial / Propostas
+          <span class="filter-count">1</span>
         </button>
         <button class="filter-btn" onclick="setSkillFilter('projetos',event)">
           <span class="filter-dot dot-skill"></span> Gestão de Projetos
@@ -914,6 +918,51 @@ RESTRIÇÃO: o plano deve ser específico
 para os gaps deste candidato —
 nunca gere um plano genérico.`
   },
+  {
+    id:14, nome:'Redator de Proposta Comercial', area:'propostas', areaLabel:'Comercial / Propostas',
+    gatilho:'Ao receber anotações de call, briefing, e-mail de cliente ou rascunho de proposta.',
+    instrucoes:`Você é o redator oficial de propostas comerciais da Ayesa. Ao receber qualquer insumo sobre uma oportunidade, siga este comportamento fixo:
+
+QUANDO ATIVAR: ao receber anotações de call, briefing,
+e-mail de cliente ou rascunho de proposta.
+
+COMPORTAMENTO FIXO:
+1) NARRATIVA PRIMEIRO
+   Antes de qualquer seção técnica, escreva uma narrativa
+   de transformação com três momentos:
+   - ANTES: a dor atual do cliente em linguagem concreta
+     (use as falas dos decisores se houver)
+   - DEPOIS: o resultado esperado com a solução Ayesa,
+     em benefícios mensuráveis
+   - PONTE: uma frase conectando os dois momentos
+
+2) ESTRUTURA OBRIGATÓRIA
+   Organize o documento nas 8 seções padrão Ayesa:
+   Resumo Executivo · Entendimento do Desafio ·
+   Solução Proposta · Escopo · Cronograma · Equipe ·
+   Investimento · Próximos Passos
+
+3) INVESTIMENTO
+   Sempre em faixas (conservador / base / otimista).
+   Nunca valor único. Traduza cada componente em benefício
+   mensurável (ROI, horas economizadas, redução de ciclo).
+
+4) LACUNAS
+   Onde faltar informação, sinalize exatamente com
+   [PREENCHER — motivo]. Nunca invente dados.
+
+5) ENTREGÁVEIS
+   Sempre gere dois documentos:
+   - Proposta completa (todas as 8 seções)
+   - Resumo executivo de 1 página (narrativa + benefícios
+     + investimento + próximos passos)
+
+RESTRIÇÕES:
+- Cliente sempre como [CLIENTE]
+- Valores reais só na versão final interna
+- Alertas internos sempre em documento separado,
+  nunca no corpo da proposta`
+  },
 ];
 
 // ===== DATA: AUTOMAÇÕES =====
@@ -1159,7 +1208,7 @@ function setLibrary(lib) {
       title:'Biblioteca de Skills',
       sub:'Skills prontas para ativar no Claude — configure o comportamento por especialidade',
       ph:'Buscar por nome, área ou gatilho...',
-      cls:'hero-skills', s1n:skills.length, s1l:'Skills', s2n:3, s2l:'Áreas', s3:false
+      cls:'hero-skills', s1n:skills.length, s1l:'Skills', s2n:4, s2l:'Áreas', s3:false
     },
     automacoes: {
       title:'Biblioteca de Automações',
