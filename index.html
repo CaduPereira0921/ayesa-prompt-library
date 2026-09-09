@@ -298,6 +298,18 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
         <div class="sidebar-title">Filtrar por Área</div>
         <button class="filter-btn active" onclick="setAutoFilter('all',event)">
           <span class="filter-dot dot-all"></span> Todas as áreas
+          <span class="filter-count">20</span>
+        </button>
+        <button class="filter-btn" onclick="setAutoFilter('especificacao',event)">
+          <span class="filter-dot dot-auto"></span> Requisitos SAP / Especificação
+          <span class="filter-count">5</span>
+        </button>
+        <button class="filter-btn" onclick="setAutoFilter('arquitetura',event)">
+          <span class="filter-dot dot-auto"></span> Arquitetura e Desenvolvimento
+          <span class="filter-count">4</span>
+        </button>
+        <button class="filter-btn" onclick="setAutoFilter('produtividade',event)">
+          <span class="filter-dot dot-auto"></span> Produtividade e Gestão
           <span class="filter-count">5</span>
         </button>
         <button class="filter-btn" onclick="setAutoFilter('projetos',event)">
@@ -314,7 +326,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
         </button>
         <button class="filter-btn" onclick="setAutoFilter('rh',event)">
           <span class="filter-dot dot-auto"></span> RH e Seleção
-          <span class="filter-count">2</span>
+          <span class="filter-count">3</span>
         </button>
       </div>
     </div>
@@ -1434,6 +1446,345 @@ Gere uma planilha com:
 Formato final: planilha .xlsx pronta para envio ao
 Diretor de Operações — sem nenhum dado pessoal exposto.`
   },
+  {
+    id:6, nome:'Requisitos — Consolidação a partir de fontes dispersas',
+    ferramenta:'Cowork', area:'especificacao', areaLabel:'Requisitos SAP / Especificação',
+    quando:'Ao ter e-mails, atas e transcrições espalhadas sobre um requisito e precisar transformá-los numa URS estruturada única, sinalizando divergências entre fontes.',
+    passos:`Pré-requisitos: pasta do projeto com os arquivos de e-mail/ata relevantes
+(ou conectores de e-mail/Teams ativos). Template URS da Ayesa disponível
+na mesma pasta.
+
+Leia todos os e-mails e atas de reunião relacionados ao [nome do requisito ou
+módulo] nesta pasta do projeto [nome-do-projeto]. Para cada demanda encontrada:
+
+1. Classifique como Funcional ou Não-Funcional
+2. Estruture no formato REQ-[MÓDULO]-[SEQ com 3 dígitos]
+3. Identifique o módulo SAP mais provável
+4. Gere um critério de aceite mensurável (nunca vago)
+5. Marque transações SAP como [VERIFICAR] quando não tiver certeza
+6. Gere no mínimo 3 perguntas em aberto por requisito
+
+Compare as demandas entre os diferentes arquivos-fonte e sinalize explicitamente
+qualquer conflito ou contradição encontrada, citando os dois arquivos de origem
+em conflito.
+
+Preencha o arquivo URS_Template_Ayesa.xlsx com uma linha por requisito, incluindo
+a coluna "Origem (arquivo)" com o nome do documento de onde veio cada requisito.
+Salve como URS_[nome-do-projeto]_consolidado.xlsx na mesma pasta.
+
+O que esperar de saída: planilha Excel com uma aba de requisitos estruturados
+e uma aba separada listando conflitos identificados entre fontes, cada um com
+recomendação de próximo passo (ex.: "realizar workshop de alinhamento entre
+Área X e Área Y").`
+  },
+  {
+    id:7, nome:'Especificação Funcional — Da URS ao documento pronto para o cliente',
+    ferramenta:'Cowork', area:'especificacao', areaLabel:'Requisitos SAP / Especificação',
+    quando:'Ao ter um requisito estruturado já aprovado e precisar gerar a FS completa, formatada no padrão Ayesa, pronta para envio.',
+    passos:`Pré-requisitos: URS já aprovada na pasta (Excel ou Word). Template de FS
+da Ayesa disponível.
+
+Com base no requisito [REQ-ID] já aprovado nesta pasta, gere a Especificação
+Funcional completa no padrão Ayesa (10 seções: Identificação, Objetivo, Módulo
+e Transações SAP, Escopo, Fluxo Principal, Fluxos Alternativos, Regras de
+Negócio, Integrações, Critérios de Aceite, Pontos em Aberto).
+
+Antes de escrever, analise o requisito de origem e liste internamente:
+1. Quais fluxos alternativos a URS não cobre
+2. Quais critérios de aceite estão vagos ou não mensuráveis
+3. Quais integrações estão implícitas mas não declaradas
+
+Marque toda transação SAP incerta como [VERIFICAR COM CLIENTE]. Marque toda
+lacuna que já vinha do requisito original como [HERDADO DO URS]. A Seção 10
+(Pontos em Aberto) nunca pode ficar vazia.
+
+Salve como FS-[MÓDULO]-[SEQ]_[nome-descritivo].docx no template Word da Ayesa,
+nesta mesma pasta.
+
+O que esperar de saída: documento Word formatado, pronto para revisão interna
+antes de envio ao cliente — não um rascunho para reformatar depois.`
+  },
+  {
+    id:8, nome:'Especificação Técnica — Cruzando FS com histórico do projeto',
+    ferramenta:'Cowork', area:'especificacao', areaLabel:'Requisitos SAP / Especificação',
+    quando:'Ao ter uma FS aprovada e precisar gerar a TS já considerando decisões e dependências entre módulos registradas anteriormente no projeto.',
+    passos:`Pré-requisitos: FS aprovada na pasta. Idealmente, também outras FS/TS já
+existentes do mesmo projeto, para permitir a checagem de dependência cruzada.
+
+Com base na FS [código-FS] nesta pasta, gere a Especificação Técnica
+correspondente. Antes de escrever, revise as demais FS e TS já existentes
+nesta pasta e identifique se este requisito depende de, ou impacta, algum
+módulo já especificado anteriormente — cite explicitamente qual documento e
+qual ponto de dependência, se houver.
+
+Estruture a TS cobrindo: objetos técnicos envolvidos (tabelas, programas,
+exits, BAdIs), complexidade estimada, e uma seção específica de "Integrações
+e Dependências" caso alguma tenha sido identificada no passo anterior.
+
+Marque qualquer transação, tabela ou objeto técnico que você não tenha certeza
+absoluta como [VERIFICAR COM CONSULTOR TÉCNICO] — nunca invente nome de
+programa ou tabela Z.
+
+Salve como TS-[MÓDULO]-[SEQ]_[nome-descritivo].docx nesta pasta.
+
+O que esperar de saída: TS que já nasce ciente do contexto do projeto, não
+isolada — reduz a chance de descobrir uma dependência de integração só na
+fase de teste.`
+  },
+  {
+    id:9, nome:'Planejamento de Testes — Matriz cruzada com critério de aceite',
+    ferramenta:'Cowork', area:'especificacao', areaLabel:'Requisitos SAP / Especificação',
+    quando:'Ao ter uma FS aprovada com Critérios de Aceite preenchidos e precisar gerar os casos de teste já auditando a cobertura real de cada critério.',
+    passos:`Pré-requisitos: FS aprovada na pasta, com a seção de Critérios de Aceite
+preenchida.
+
+A partir da FS [código-FS] nesta pasta, gere a matriz de casos de teste em
+Excel, cobrindo: caminho feliz, cada fluxo alternativo listado na FS, e casos
+de borda relevantes para o tipo de requisito.
+
+Depois de gerar os casos, faça uma auditoria cruzada: liste cada critério de
+aceite mensurável da Seção 9 da FS e confirme se existe pelo menos um caso de
+teste cobrindo aquele critério especificamente. Se algum critério ficar sem
+cobertura, sinalize isso claramente numa aba separada "Gaps de Cobertura", sem
+inventar um caso de teste artificial só para preencher.
+
+Salve como Plano_Testes_[código-FS].xlsx nesta pasta.
+
+O que esperar de saída: planilha com casos de teste e uma segunda aba
+mostrando exatamente onde a cobertura está incompleta — não uma promessa
+vaga de "cobertura completa".`
+  },
+  {
+    id:10, nome:'Documentação de Testes — Dossiê consolidado, com agendamento',
+    ferramenta:'Cowork', area:'especificacao', areaLabel:'Requisitos SAP / Especificação',
+    quando:'Ao ter URS, FS, TS e plano de testes do mesmo requisito completos e precisar consolidar tudo num único PDF de sign-off — pontualmente ou em cadência agendada.',
+    passos:`Pré-requisitos: URS, FS, TS e plano de testes do mesmo requisito, todos na
+mesma pasta.
+
+Prompt (consolidação pontual):
+Consolide a URS, a FS, a TS e o Plano de Testes do requisito [REQ-ID] nesta
+pasta num único documento PDF de sign-off. Inclua um sumário executivo de uma
+página no início, resumindo: o que foi solicitado, o que foi especificado,
+como será testado, e quais pontos ainda estão em aberto entre todos os
+documentos.
+
+Salve como Dossie_SignOff_[REQ-ID].pdf nesta pasta.
+
+Prompt (para transformar em tarefa agendada — digite /schedule depois de
+rodar o prompt acima com sucesso):
+Toda sexta-feira às 17h, gere um dossiê consolidado (URS + FS + TS + Plano de
+Testes) para cada requisito desta pasta que tenha todos os quatro documentos
+completos desde a última execução, seguindo o mesmo formato já validado.
+Salve cada um numa subpasta /dossies-sign-off/ com o nome do REQ-ID e a data.
+
+O que esperar de saída: um PDF único por requisito, pronto para apresentar ao
+cliente — e, com o agendamento, isso passa a acontecer sozinho sem ninguém
+lembrar de rodar manualmente.`
+  },
+  {
+    id:11, nome:'Arquitetura — Consolidação em ADR formal',
+    ferramenta:'Cowork', area:'arquitetura', areaLabel:'Arquitetura e Desenvolvimento',
+    quando:'Ao ter decisões de arquitetura discutidas informalmente (e-mails, atas, transcrições) e precisar transformá-las num Architecture Decision Record rastreável.',
+    passos:`Pré-requisitos: e-mails, atas ou transcrições onde a decisão foi discutida,
+na pasta do projeto.
+
+Leia os e-mails e atas de reunião nesta pasta relacionados à decisão de
+arquitetura sobre [tema da decisão, ex.: "migração do módulo MM para
+S/4HANA"]. Gere um ADR (Architecture Decision Record) formal, contendo:
+
+1. Contexto — por que essa decisão precisou ser tomada
+2. Opções consideradas — cada uma com prós e contras, citados das fontes reais
+3. Decisão tomada — e por quem, se identificável nas fontes
+4. Consequências esperadas — técnicas e de negócio
+5. Status — decidido / em aberto / revisão pendente
+
+Se as fontes não deixarem claro algum desses pontos, marque como [VERIFICAR
+COM O RESPONSÁVEL] em vez de presumir.
+
+Salve como ADR-[número sequencial]_[tema-curto].md nesta pasta.
+
+O que esperar de saída: documento único, versionável em Git junto com o
+código, que qualquer pessoa nova no projeto consegue ler para entender por
+que uma decisão técnica foi tomada.`
+  },
+  {
+    id:12, nome:'Comparativo de Opções — Documento de decisão para comitê',
+    ferramenta:'Cowork', area:'arquitetura', areaLabel:'Arquitetura e Desenvolvimento',
+    quando:'Ao ter um contexto técnico já discutido e precisar montar um comparativo estruturado para apresentação a um comitê, antes de uma decisão de arquitetura ser formalizada.',
+    passos:`Pré-requisitos: contexto já discutido (e-mails, atas, ou até uma conversa
+anterior no Chat/Cowork sobre o tema) disponível na pasta.
+
+Monte um documento comparativo para apresentação ao comitê técnico sobre
+[ex.: "manter SAP ECC 6.0 vs. migrar para S/4HANA"] com base no que já foi
+discutido nesta pasta. Estruture como:
+
+- Critérios de comparação (ex.: custo, prazo, risco, impacto operacional)
+- Uma tabela cruzando cada opção contra cada critério
+- Recomendação, se as fontes já apontarem uma direção clara — caso contrário,
+  deixe explícito que a decisão ainda está em aberto
+- Riscos específicos de cada opção, não genéricos
+
+Não invente números de custo ou prazo que não estejam nas fontes — marque
+como [A CONFIRMAR COM O CLIENTE] onde faltar dado real.
+
+Salve como Comparativo_[tema-curto].pptx ou .docx, no formato que for mais
+adequado para apresentação (pergunte se não estiver claro).
+
+O que esperar de saída: material pronto para levar a uma reunião de decisão,
+sem números inventados preenchendo lacunas reais.`
+  },
+  {
+    id:13, nome:'Consolidação de Revisão — Relatório único de pontos de atenção',
+    ferramenta:'Cowork', area:'arquitetura', areaLabel:'Arquitetura e Desenvolvimento',
+    quando:'Ao ter comentários de revisão de código vindos de fontes diferentes (PR, e-mail, Slack/Teams) e precisar juntá-los num relatório único e acionável para o desenvolvedor.',
+    passos:`Pré-requisitos: exportação de comentários de PR, e-mails ou mensagens de
+Slack/Teams com o feedback de revisão, na pasta.
+
+Leia os comentários de revisão de código nesta pasta — vindos do PR exportado,
+dos e-mails e das mensagens de Slack/Teams sobre [nome do módulo/feature].
+Consolide tudo num relatório único de pontos de atenção para o desenvolvedor,
+organizado por:
+
+1. Bloqueante — precisa ser corrigido antes do merge
+2. Sugestão — melhoria recomendada, não bloqueante
+3. Dúvida — pontos que precisam de esclarecimento antes de agir
+
+Para cada item, cite a fonte original (quem comentou, onde) e o trecho de
+código ou linha referenciada, se identificável.
+
+Salve como Relatorio_Revisao_[nome-do-módulo].docx nesta pasta.
+
+O que esperar de saída: um único documento organizado por prioridade, em vez
+do desenvolvedor ter que abrir três ferramentas diferentes para juntar todo
+o feedback.`
+  },
+  {
+    id:14, nome:'Estimativa e Cronograma — De escopo técnico a planilha de esforço',
+    ferramenta:'Cowork', area:'arquitetura', areaLabel:'Arquitetura e Desenvolvimento',
+    quando:'Ao ter uma TS ou documento de escopo técnico já aprovado e precisar transformá-lo numa planilha de estimativa, pronta para o gerente de projeto revisar.',
+    passos:`Pré-requisitos: TS ou documento de escopo técnico já aprovado na pasta.
+
+Com base na TS [código-TS] nesta pasta, gere uma planilha de estimativa de
+esforço e cronograma. Para cada objeto técnico ou atividade identificada:
+
+1. Estime o esforço em horas (baseado em complexidade indicada na TS:
+   baixa/média/alta)
+2. Sugira uma sequência lógica de execução (o que depende do que)
+3. Sinalize riscos que podem impactar o prazo (ex.: dependência de aprovação
+   externa, integração com sistema legado)
+
+Marque toda estimativa como uma sugestão inicial, não um compromisso — o
+gerente de projeto ainda precisa validar antes de comunicar ao cliente.
+
+Salve como Estimativa_[código-TS].xlsx nesta pasta.
+
+O que esperar de saída: planilha de partida para a conversa com o gerente de
+projeto — não uma promessa de prazo já fechada.`
+  },
+  {
+    id:15, nome:'Atualização de Apresentação Recorrente',
+    ferramenta:'Cowork', area:'produtividade', areaLabel:'Produtividade e Gestão',
+    quando:'Ao ter uma apresentação de status existente e uma planilha com os números atualizados do mês, e precisar atualizar os slides mantendo layout e marca.',
+    passos:`Pré-requisitos: apresentação existente (PPTX) e planilha com os números
+atualizados, na mesma pasta.
+
+Atualize a apresentação [nome-do-arquivo].pptx nesta pasta com os números mais
+recentes da planilha [nome-da-planilha].xlsx. Mantenha o layout, as cores e a
+estrutura de slides exatamente como estão — só atualize os dados, gráficos e
+números que mudaram desde a última versão.
+
+Antes de salvar, me mostre um resumo do que foi alterado (quais slides, quais
+números) para eu confirmar antes de sobrescrever o arquivo original.
+
+O que esperar de saída: apresentação atualizada, com um resumo de mudanças
+para revisão antes de qualquer sobrescrita.`
+  },
+  {
+    id:16, nome:'Relatório Consolidado',
+    ferramenta:'Cowork', area:'produtividade', areaLabel:'Produtividade e Gestão',
+    quando:'Ao ter dados de fontes diferentes (planilha de horas, export do sistema de projeto, e-mails de status) e precisar juntá-los num relatório único, pronto para a liderança.',
+    passos:`Pré-requisitos: os arquivos/fontes de dados (planilha de horas, export do
+sistema de projeto, e-mails de status) na pasta ou conectados.
+
+Consolide os dados desta pasta — a planilha de horas, o export do sistema de
+projeto, e os e-mails de status recebidos esta semana — num relatório único
+para a liderança. Estruture como: resumo executivo (3-4 linhas), principais
+avanços, riscos identificados, e o que precisa de decisão da liderança.
+
+Onde os dados de fontes diferentes divergirem (ex.: horas reportadas vs. horas
+no sistema), sinalize a divergência em vez de escolher um número silenciosamente.
+
+Salve como Relatorio_[período]_[projeto].docx nesta pasta.
+
+O que esperar de saída: relatório pronto para envio, com divergências entre
+fontes explicitadas, não escondidas.`
+  },
+  {
+    id:17, nome:'Resumo Semanal Automático',
+    ferramenta:'Cowork', area:'produtividade', areaLabel:'Produtividade e Gestão',
+    quando:'Toda semana, para consolidar o que avançou no e-mail e no Teams/Slack de um projeto e entregar um recap de uma página, em cadência, sem disparo manual.',
+    passos:`Pré-requisitos: conectores de e-mail e Slack/Teams ativos para o projeto.
+
+Prompt (configurar via /schedule):
+Toda sexta-feira às 16h, consolide o que foi decidido e avançado esta semana
+no e-mail e no Teams sobre o projeto [nome-do-projeto]. Gere um recap de uma
+página com: principais avanços, decisões tomadas, e o que ficou pendente para
+a próxima semana. Envie por e-mail para [destinatários] com o assunto "Recap
+Semanal — [projeto] — [data]".
+
+O que esperar de saída: um e-mail de recap chegando sozinho toda sexta, sem
+ninguém precisar lembrar de escrever.`
+  },
+  {
+    id:18, nome:'Preparação de Reunião',
+    ferramenta:'Cowork', area:'produtividade', areaLabel:'Produtividade e Gestão',
+    quando:'Antes de uma call com cliente ou pessoa específica, para montar um briefing de uma página com o histórico relevante já consolidado.',
+    passos:`Pré-requisitos: conector de e-mail/calendário ativo, ou os arquivos de
+histórico na pasta.
+
+Tenho uma reunião com [cliente/pessoa] amanhã sobre [tema]. Puxe o histórico
+de e-mails com essa pessoa nos últimos [período], a ata da última reunião
+sobre o tema, e monte um briefing de uma página com: o que já foi decidido, o
+que ficou pendente, e uma sugestão de pauta para os pontos que ainda precisam
+de decisão.
+
+O que esperar de saída: briefing pronto para ler nos 5 minutos antes de
+entrar na call, em vez de vasculhar e-mails antigos.`
+  },
+  {
+    id:19, nome:'Triagem de Caixa de Entrada',
+    ferramenta:'Cowork', area:'produtividade', areaLabel:'Produtividade e Gestão',
+    quando:'Ao precisar organizar os e-mails recebidos na semana por urgência e tema, sinalizando o que precisa de resposta imediata, sem enviar nada automaticamente.',
+    passos:`Pré-requisitos: conector de e-mail ativo.
+
+Revise os e-mails recebidos nos últimos [período] na minha caixa de entrada.
+Organize por tema (ex.: cliente X, projeto Y, administrativo) e sinalize,
+dentro de cada tema, quais precisam de resposta ainda hoje, quais podem
+esperar, e quais são só informativos (não precisam de ação).
+
+Não responda nenhum e-mail — só organize e me entregue a triagem para eu
+decidir o que fazer com cada um.
+
+O que esperar de saída: uma lista organizada por prioridade — o Cowork nunca
+envia nada sozinho aqui, só organiza para sua decisão.`
+  },
+  {
+    id:20, nome:'Onboarding de Novo Colaborador',
+    ferramenta:'Cowork', area:'rh', areaLabel:'RH e Seleção',
+    quando:'Ao ter um checklist de onboarding padrão da equipe e precisar montar o pacote de boas-vindas completo para um novo colaborador.',
+    passos:`Pré-requisitos: checklist de onboarding padrão da Ayesa disponível na pasta.
+
+Com base no checklist de onboarding padrão nesta pasta, monte o pacote de
+boas-vindas para [nome do novo colaborador], que vai atuar como [cargo/papel]
+no time. Inclua: cronograma sugerido da primeira semana, lista de acessos que
+precisam ser solicitados (com quem solicitar cada um, conforme o checklist),
+e uma lista de contatos-chave do time com uma linha sobre o papel de cada um.
+
+Salve como Onboarding_[nome-do-colaborador].docx nesta pasta.
+
+O que esperar de saída: documento único e personalizado, pronto para enviar
+ao novo colaborador no primeiro dia.`
+  },
 ];
 
 // ===== STATE =====
@@ -1478,7 +1829,7 @@ function setLibrary(lib) {
       title:'Biblioteca de Automações',
       sub:'Automações Cowork prontas — fluxos completos para tarefas recorrentes da Ayesa',
       ph:'Buscar por nome ou atividade...',
-      cls:'hero-automacoes', s1n:automacoes.length, s1l:'Automações', s2n:4, s2l:'Áreas', s3:false
+      cls:'hero-automacoes', s1n:automacoes.length, s1l:'Automações', s2n:7, s2l:'Áreas', s3:false
     }
   };
   const c = cfgs[lib];
