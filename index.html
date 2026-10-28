@@ -12,6 +12,7 @@
   --navy-light:#E8EDF7;--blue-light:#E6F1FB;--teal-light:#E1F5EE;--amber-light:#FAEEDA;--purple-light:#F0E8FF;
   --skill:#1A6B3A;--skill-light:#E3F5EB;
   --auto:#944B00;--auto-light:#FBF0E0;
+  --dev:#1B4F4F;--dev-light:#E4EEEE;
   --bg:#F7F8FC;--surface:#FFFFFF;--border:rgba(11,44,107,0.12);
   --text:#0B2C6B;--text-muted:#5A6A8A;--text-light:#8A9AB8;
   --radius:10px;--radius-lg:16px;
@@ -33,11 +34,13 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
 .lib-btn.active{color:white;border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.13);}
 .lib-btn.active[data-lib="skills"]{background:rgba(26,107,58,0.45);border-color:rgba(26,107,58,0.8);}
 .lib-btn.active[data-lib="automacoes"]{background:rgba(148,75,0,0.45);border-color:rgba(148,75,0,0.8);}
+.lib-btn.active[data-lib="desenvolvimento"]{background:rgba(27,79,79,0.45);border-color:rgba(27,79,79,0.8);}
 
 /* HERO */
 .hero{background:linear-gradient(135deg,var(--navy) 0%,#1A3A8A 50%,#1A6FA8 100%);padding:2.5rem 2rem 2rem;text-align:center;color:white;position:relative;overflow:hidden;transition:background 0.3s;}
 .hero.hero-skills{background:linear-gradient(135deg,#0A3D1E 0%,#1A5E2E 50%,#1A7A4A 100%);}
 .hero.hero-automacoes{background:linear-gradient(135deg,#3D1A0A 0%,#6B2E00 50%,var(--auto) 100%);}
+.hero.hero-desenvolvimento{background:linear-gradient(135deg,#0A2E2E 0%,#123E3E 50%,var(--dev) 100%);}
 .hero::before{content:'';position:absolute;top:-50%;left:-20%;width:60%;height:200%;background:rgba(255,255,255,0.03);border-radius:50%;}
 .hero h1{font-size:2rem;font-weight:600;margin-bottom:0.5rem;position:relative;}
 .hero p{color:rgba(255,255,255,0.65);font-size:1rem;margin-bottom:1.5rem;position:relative;}
@@ -72,6 +75,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
 .dot-all{background:var(--text-light);}
 .dot-skill{background:var(--skill);}
 .dot-auto{background:var(--auto);}
+.dot-dev{background:var(--dev);}
 .filter-count{margin-left:auto;font-size:11px;color:var(--text-light);background:var(--bg);border-radius:10px;padding:1px 6px;}
 
 .content{min-width:0;}
@@ -101,6 +105,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
 .tag-funcao{background:var(--purple-light);color:var(--purple);}
 .tag-skill{background:var(--skill-light);color:var(--skill);}
 .tag-auto{background:var(--auto-light);color:var(--auto);}
+.tag-dev{background:var(--dev-light);color:var(--dev);}
 .category-name{font-size:16px;font-weight:500;color:var(--text);}
 
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
@@ -113,6 +118,7 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
 .card-verificacao::before{background:var(--amber);}
 .card-skill::before{background:var(--skill);}
 .card-auto::before{background:var(--auto);}
+.card-dev::before{background:var(--dev);}
 .card-framework{font-size:11px;font-weight:500;color:var(--text-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
 .card-title{font-size:14px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:8px;}
 .card-subtitle{font-size:12px;color:var(--text-muted);line-height:1.4;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
@@ -139,9 +145,11 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
 .prompt-block{background:#F0F4FF;border:1px solid rgba(26,111,168,0.15);border-left:3px solid var(--blue);border-radius:0 var(--radius) var(--radius) 0;padding:1rem 1.25rem;margin-bottom:1rem;}
 .prompt-block.pb-skill{background:var(--skill-light);border-left-color:var(--skill);border-color:rgba(26,107,58,0.15);}
 .prompt-block.pb-auto{background:var(--auto-light);border-left-color:var(--auto);border-color:rgba(148,75,0,0.15);}
+.prompt-block.pb-dev{background:var(--dev-light);border-left-color:var(--dev);border-color:rgba(27,79,79,0.15);}
 .prompt-block-label{font-size:11px;font-weight:500;color:var(--blue);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
 .pb-skill .prompt-block-label{color:var(--skill);}
 .pb-auto .prompt-block-label{color:var(--auto);}
+.pb-dev .prompt-block-label{color:var(--dev);}
 .prompt-block-text{font-family:'DM Mono',monospace;font-size:13px;color:var(--text);line-height:1.7;white-space:pre-wrap;}
 .copy-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-muted);cursor:pointer;transition:all 0.15s;margin-top:1rem;}
 .copy-btn:hover{background:var(--navy);color:white;border-color:var(--navy);}
@@ -177,13 +185,14 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
       <div class="logo-sub">ibp solutions × Ayesa</div>
     </div>
   </div>
-  <div class="header-badge">v3.0 · Workshop 1</div>
+  <div class="header-badge">v4.0</div>
 </header>
 
 <nav class="lib-nav">
   <button class="lib-btn active" data-lib="prompts" onclick="setLibrary('prompts')">📋 Biblioteca de Prompts</button>
   <button class="lib-btn" data-lib="skills" onclick="setLibrary('skills')">⚙️ Biblioteca de Skills</button>
   <button class="lib-btn" data-lib="automacoes" onclick="setLibrary('automacoes')">🤖 Biblioteca de Automações</button>
+  <button class="lib-btn" data-lib="desenvolvimento" onclick="setLibrary('desenvolvimento')">💻 Desenvolvimento com Agentes</button>
 </nav>
 
 <div class="hero" id="heroSection">
@@ -326,6 +335,59 @@ header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;d
         </button>
         <button class="filter-btn" onclick="setAutoFilter('rh',event)">
           <span class="filter-dot dot-auto"></span> RH e Seleção
+          <span class="filter-count">3</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- DESENVOLVIMENTO COM AGENTES SIDEBAR -->
+    <div id="sidebarDesenvolvimento" style="display:none;">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Visualizar</div>
+        <button class="filter-btn active" onclick="setDevFilter('all',event)">
+          <span class="filter-dot dot-all"></span> Todos os prompts
+          <span class="filter-count">30</span>
+        </button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Fluxo principal</div>
+        <button class="filter-btn" onclick="setDevFilter('explore',event)">
+          <span class="filter-dot dot-dev"></span> 1 · Explore
+          <span class="filter-count">3</span>
+        </button>
+        <button class="filter-btn" onclick="setDevFilter('plan',event)">
+          <span class="filter-dot dot-dev"></span> 2 · Plan
+          <span class="filter-count">4</span>
+        </button>
+        <button class="filter-btn" onclick="setDevFilter('code',event)">
+          <span class="filter-dot dot-dev"></span> 3 · Code
+          <span class="filter-count">4</span>
+        </button>
+        <button class="filter-btn" onclick="setDevFilter('verificacao',event)">
+          <span class="filter-dot dot-dev"></span> Verificação (dentro do Code)
+          <span class="filter-count">5</span>
+        </button>
+        <button class="filter-btn" onclick="setDevFilter('commit',event)">
+          <span class="filter-dot dot-dev"></span> 4 · Commit
+          <span class="filter-count">4</span>
+        </button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Variações</div>
+        <button class="filter-btn" onclick="setDevFilter('var-pequena',event)">
+          <span class="filter-dot dot-dev"></span> Tarefa pequena
+          <span class="filter-count">1</span>
+        </button>
+        <button class="filter-btn" onclick="setDevFilter('var-entender',event)">
+          <span class="filter-dot dot-dev"></span> Entender o código
+          <span class="filter-count">3</span>
+        </button>
+        <button class="filter-btn" onclick="setDevFilter('var-revisao',event)">
+          <span class="filter-dot dot-dev"></span> Revisão de código
+          <span class="filter-count">3</span>
+        </button>
+        <button class="filter-btn" onclick="setDevFilter('var-bug',event)">
+          <span class="filter-dot dot-dev"></span> Corrigir bug
           <span class="filter-count">3</span>
         </button>
       </div>
@@ -1787,6 +1849,371 @@ ao novo colaborador no primeiro dia.`
   },
 ];
 
+// ===== DATA: DESENVOLVIMENTO COM AGENTES =====
+
+const desenvolvimento = [
+  {
+    id:1, nome:'Mapear o repositório', ferramenta:'Claude Code', etapa:'explore', etapaLabel:'1 · Explore',
+    quando:`Ao abrir um repositório novo ou desconhecido, antes de pedir qualquer mudança.`,
+    prompt:`Leia o CLAUDE.md na raiz do repositório e depois mapeie a estrutura do projeto, sem editar nada.
+
+Quero entender:
+1. Como as pastas requirements/, design/ e src/ estão organizadas e o que cada uma contém.
+2. Quais convenções de nomenclatura os objetos ABAP seguem (prefixo Z, sufixos, padrão de nomes de função).
+3. Quais dependências existem entre os arquivos de src/ (quem chama quem, quais tabelas são usadas).
+4. Qualquer regra de projeto registrada no CLAUDE.md.
+
+Não altere nenhum arquivo. Ao final, apresente um resumo em tópicos e aponte qualquer coisa que pareça inconsistente ou sem documentação suficiente.`,
+    esperar:`Um resumo da estrutura do repositório, das convenções de nomenclatura identificadas e das dependências entre os objetos ABAP, sem nenhuma edição de arquivo.`,
+    conferir:`Se o resumo bate com o que você já sabe do repositório e se o Claude realmente não editou nada (confirme com git status).`,
+    proximo:`Plano de implementação a partir da ET aprovada`
+  },
+  {
+    id:2, nome:'Entender um objeto ABAP existente', ferramenta:'Claude Code', etapa:'explore', etapaLabel:'1 · Explore',
+    quando:`Antes de alterar um objeto ABAP que você não escreveu ou não lembra em detalhe.`,
+    prompt:`Leia o arquivo src/ZMM_NOTIF_GR_FI.abap e me explique, sem editar nada:
+
+1. O que esse objeto faz, em linguagem simples.
+2. Quais tabelas ele lê e quais ele grava.
+3. Quais outros objetos do repositório chamam ou são chamados por ele (procure em src/ e em design/).
+4. Quais parâmetros de entrada e saída ele tem.
+
+Se encontrar alguma referência a REQ-MM-001, FS-MM-001 ou TS-MM-001 nos comentários do código, cite onde.`,
+    esperar:`Uma explicação do que o objeto faz, das tabelas envolvidas, das dependências com outros objetos e dos parâmetros, com referência aos requisitos ou especificações citados no código.`,
+    conferir:`Se a explicação condiz com o que o código realmente faz (releia os trechos citados) e se alguma dependência relevante não foi encontrada.`,
+    proximo:`Levantar o impacto de uma mudança`
+  },
+  {
+    id:3, nome:'Levantar o impacto de uma mudança', ferramenta:'Claude Code', etapa:'explore', etapaLabel:'1 · Explore',
+    quando:`Antes de aceitar um pedido de mudança, para saber o que mais seria afetado.`,
+    prompt:`Quero alterar o objeto src/ZFM_VALIDA_FORNECEDOR_MM001.abap para incluir uma nova regra de validação (vou detalhar a regra depois). Antes disso, sem editar nada, levante o impacto dessa mudança:
+
+1. Quais outros objetos do repositório chamam essa função.
+2. Quais tabelas e campos esse objeto usa hoje, que poderiam ser afetados por uma regra nova.
+3. Se existe algum caso de teste, especificação (design/) ou requisito (requirements/) que já descreve esse comportamento e precisaria ser atualizado junto.
+4. Qualquer risco de regressão que você identifique.
+
+Apresente o resultado como uma lista de impactos, do mais crítico para o menos crítico.`,
+    esperar:`Uma lista de impactos priorizada, cobrindo chamadores do objeto, tabelas e campos afetados, documentos que precisariam ser atualizados e riscos de regressão.`,
+    conferir:`Se a lista cobre as pastas requirements/ e design/, não só o código, e se os riscos apontados fazem sentido para a mudança que você tem em mente.`,
+    proximo:`Entrevista antes do plano`
+  },
+  {
+    id:4, nome:'Entrevista antes do plano', ferramenta:'Claude Code', etapa:'plan', etapaLabel:'2 · Plan',
+    quando:`Antes de pedir um plano de implementação, quando o requisito ainda tem pontos em aberto.`,
+    prompt:`Antes de montar qualquer plano de implementação, leia requirements/REQ-MM-001.md e design/FS-MM-001.md.
+
+Não monte o plano ainda. Primeiro, me faça as perguntas que você precisa ter respondidas para planejar essa implementação com segurança: pontos ambíguos no requisito, decisões técnicas que dependem de mim, e qualquer suposição que você teria que assumir sem perguntar.
+
+Liste as perguntas numeradas, da mais crítica para a mais secundária. Espere minhas respostas antes de propor o plano.`,
+    esperar:`Uma lista numerada de perguntas sobre o requisito e a especificação, sem nenhum plano ainda.`,
+    conferir:`Se as perguntas realmente destravam decisões de implementação, e não são só uma repetição do que já está escrito na FS.`,
+    proximo:`Plano de implementação a partir da ET aprovada`
+  },
+  {
+    id:5, nome:'Plano de implementação a partir da ET aprovada', ferramenta:'Claude Code', etapa:'plan', etapaLabel:'2 · Plan',
+    quando:`Com a Especificação Técnica (ET) já aprovada, antes de começar a codificar.`,
+    prompt:`Ative o Plan mode (Shift+Tab no terminal, pode ser necessário apertar mais de uma vez até aparecer "plan"; ou o seletor de modo no Claude Code Desktop).
+
+Leia requirements/REQ-MM-001.md, design/FS-MM-001.md, design/TS-MM-001.md e design/ARQ-MM-001.md. Depois, monte um plano de implementação para o que a TS-MM-001 descreve, contendo:
+
+1. Lista dos arquivos que serão criados ou alterados.
+2. Ordem recomendada de implementação, com justificativa.
+3. Riscos técnicos e de regressão.
+4. Critério de sucesso objetivo para cada etapa do plano.
+
+Não implemente nada ainda. Esse plano é para eu revisar e aprovar antes de qualquer edição.`,
+    esperar:`Um plano estruturado com arquivos afetados, ordem de implementação, riscos e critério de sucesso por etapa, sem nenhuma edição de código.`,
+    conferir:`Se o plano cobre todos os objetos citados na TS, se a ordem evita retrabalho e se os critérios de sucesso são verificáveis, não apenas "funciona".`,
+    proximo:`Revisar o plano antes de aprovar`
+  },
+  {
+    id:6, nome:'Revisar o plano antes de aprovar', ferramenta:'Claude Code', etapa:'plan', etapaLabel:'2 · Plan',
+    quando:`Depois de receber um plano, antes de aprovar e liberar a implementação.`,
+    prompt:`Antes de eu aprovar este plano, faça uma autocrítica dele:
+
+1. Que lacunas ou suposições o plano ainda tem em relação à TS-MM-001 e à FS-MM-001?
+2. Existe algum passo do plano que depende de uma decisão que só eu posso tomar?
+3. Qual passo do plano é o mais arriscado, e por quê?
+4. Que pergunta você faria para mim antes de começar a implementar, se pudesse fazer só uma?
+
+Não altere o plano ainda, só aponte os problemas.`,
+    esperar:`Uma lista de lacunas, suposições, riscos e uma pergunta de maior prioridade, sem reescrever o plano.`,
+    conferir:`Se os pontos levantados realmente mudariam o plano se respondidos, e não são só reafirmações do que já estava escrito.`,
+    proximo:`Transformar o plano em critérios de aceite verificáveis`
+  },
+  {
+    id:7, nome:'Transformar o plano em critérios de aceite verificáveis', ferramenta:'Claude Code', etapa:'plan', etapaLabel:'2 · Plan',
+    quando:`Depois de aprovar o plano, antes de começar a implementação, para travar o que significa "pronto".`,
+    prompt:`Com o plano aprovado, transforme cada etapa dele em um critério de aceite verificável, no formato "dado X, quando Y, então Z". Cada critério precisa poder ser confirmado por um teste ABAP Unit ou por uma inspeção direta do código, não por uma opinião.
+
+Numere os critérios e relacione cada um com o trecho da FS-MM-001 ou TS-MM-001 que ele cobre.`,
+    esperar:`Uma lista numerada de critérios de aceite no formato dado/quando/então, cada um relacionado a um trecho da FS ou TS.`,
+    conferir:`Se cada critério é realmente testável, não vago, e se, juntos, cobrem todo o escopo do plano aprovado.`,
+    proximo:`Implementar um passo do plano, um de cada vez`
+  },
+  {
+    id:8, nome:'Implementar um passo do plano, um de cada vez', ferramenta:'Claude Code', etapa:'code', etapaLabel:'3 · Code',
+    quando:`Durante a implementação, depois do plano aprovado, para manter cada mudança revisável.`,
+    prompt:`Implemente apenas o passo 1 do plano aprovado. Não avance para o passo 2 antes de eu confirmar.
+
+Ao terminar o passo 1, mostre o que foi alterado e explique como isso atende ao critério de aceite correspondente. Espere minha confirmação antes de seguir para o próximo passo.`,
+    esperar:`A implementação de um único passo do plano, com explicação de como ele atende ao critério de aceite, e a sessão parada esperando confirmação.`,
+    conferir:`Se o Claude realmente implementou só o passo pedido (confira com /diff) e se a explicação cita o critério de aceite correto.`,
+    proximo:`Rodar as checagens e trazer evidência`
+  },
+  {
+    id:9, nome:'Corrigir um desvio', ferramenta:'Claude Code', etapa:'code', etapaLabel:'3 · Code',
+    quando:`Quando o Claude começa a implementar algo diferente do plano ou do critério de aceite combinado.`,
+    prompt:`Pare. Isso não é o que foi combinado no plano: [descreva em uma frase o que saiu do combinado, por exemplo "você alterou a tabela errada" ou "isso não estava no passo atual"].
+
+Desfaça essa parte com /rewind (ou me explique o que seria necessário desfazer manualmente) e volte para o passo correto do plano, respeitando o critério de aceite [número do critério].`,
+    esperar:`O Claude reconhecendo o desvio, desfazendo a parte incorreta com /rewind e retomando o passo certo do plano.`,
+    conferir:`Se o /rewind realmente removeu a mudança indesejada (confira com /diff ou git status) e se a nova tentativa segue o critério de aceite citado.`,
+    proximo:`Escrever os testes ABAP Unit primeiro, a partir dos critérios de aceite`
+  },
+  {
+    id:10, nome:'Escrever os testes ABAP Unit primeiro', ferramenta:'Claude Code', etapa:'code', etapaLabel:'3 · Code',
+    quando:`Antes de implementar a lógica de um objeto, para travar o comportamento esperado primeiro.`,
+    prompt:`Antes de implementar a lógica do passo atual do plano, escreva os testes ABAP Unit que vão validar os critérios de aceite [números dos critérios relacionados a este passo]. Os testes devem falhar agora, porque a lógica ainda não existe.
+
+Não implemente a lógica ainda. Só os testes, e me mostre por que cada um falha no estado atual.`,
+    esperar:`Uma classe de teste ABAP Unit cobrindo os critérios de aceite indicados, que falha no estado atual do código, com explicação do motivo da falha.`,
+    conferir:`Se cada teste corresponde a um critério de aceite específico e se o motivo da falha apontado é o esperado (ausência da lógica), não um erro de sintaxe no teste.`,
+    proximo:`Implementar um passo do plano, um de cada vez`
+  },
+  {
+    id:11, nome:'Registrar o aprendizado no CLAUDE.md', ferramenta:'Claude Code', etapa:'code', etapaLabel:'3 · Code',
+    quando:`Depois de descobrir, durante a implementação, uma regra ou particularidade do projeto que não estava documentada.`,
+    prompt:`Durante esta sessão descobrimos uma regra que não estava no CLAUDE.md: [descreva a regra ou particularidade descoberta, por exemplo "o campo X da tabela Y nunca pode ser alterado diretamente, só pela função Z"].
+
+Adicione essa regra ao CLAUDE.md, na seção apropriada, com uma frase curta e objetiva. Não reescreva o restante do arquivo.`,
+    esperar:`Uma nova linha ou bullet no CLAUDE.md, na seção correta, sem alterações no restante do conteúdo do arquivo.`,
+    conferir:`Se a regra ficou clara e objetiva, e se nada mais no CLAUDE.md foi alterado além do necessário (confira com /diff).`,
+    proximo:`Rodar as checagens e trazer evidência`
+  },
+  {
+    id:12, nome:'Rodar as checagens e trazer evidência', ferramenta:'Claude Code', etapa:'verificacao', etapaLabel:'3 · Verificação',
+    quando:`Depois de qualquer implementação, antes de considerar o passo concluído.`,
+    prompt:`Rode as checagens disponíveis para o que foi implementado neste passo: revisão estática do ABAP (sintaxe, convenções) e os testes ABAP Unit escritos para este passo.
+
+Como este repositório não tem conexão com um sistema SAP, não me diga apenas "passou". Me mostre: o comando ou a revisão que você fez, e o resultado exato dela (trecho revisado, teste e o motivo de passar ou falhar).`,
+    esperar:`Evidência concreta da verificação: qual revisão ou teste foi feito e o resultado exato, não apenas a afirmação de que passou.`,
+    conferir:`Se a evidência apresentada realmente corresponde ao código implementado neste passo, e não a um trecho antigo ou genérico.`,
+    proximo:`Revisor independente`
+  },
+  {
+    id:13, nome:'Revisor independente', ferramenta:'Claude Code', etapa:'verificacao', etapaLabel:'3 · Verificação',
+    quando:`Antes de considerar a implementação pronta para commit, para uma segunda opinião isenta.`,
+    prompt:`Crie um arquivo em .claude/agents/revisor-independente.md para um subagente que só tem acesso de leitura (ferramentas Read, Grep e Glob), com a instrução de revisar o código implementado contra a design/TS-MM-001.md, sem poder editar nada.
+
+Depois, use esse subagente para revisar o que foi implementado nesta sessão e me traga o parecer dele: o que atende à TS, o que não atende, e o que está ambíguo.`,
+    esperar:`O arquivo do subagente criado em .claude/agents/, e o parecer desse subagente sobre a aderência do código à TS-MM-001.`,
+    conferir:`Se o subagente realmente não tem ferramentas de escrita no frontmatter do arquivo, e se o parecer aponta trechos específicos do código e da TS, não uma opinião genérica.`,
+    proximo:`Conferir contra o requisito`
+  },
+  {
+    id:14, nome:'Conferir contra o requisito', ferramenta:'Claude Code', etapa:'verificacao', etapaLabel:'3 · Verificação',
+    quando:`Antes do commit, para garantir que a implementação resolve o requisito original, não só a especificação técnica.`,
+    prompt:`Monte uma rastreabilidade simples entre requirements/REQ-MM-001.md, design/FS-MM-001.md, design/TS-MM-001.md e o código implementado nesta sessão:
+
+1. Cada regra de negócio do REQ-MM-001 está refletida na FS-MM-001?
+2. Cada item da FS-MM-001 está coberto por algo na TS-MM-001?
+3. Cada item da TS-MM-001 tem um trecho de código correspondente?
+
+Aponte qualquer item que quebre essa cadeia (existe no requisito, mas não chegou ao código, por exemplo).`,
+    esperar:`Uma tabela ou lista de rastreabilidade entre requisito, FS, TS e código, com qualquer quebra na cadeia destacada.`,
+    conferir:`Se a rastreabilidade cobre os três documentos e o código, não só dois deles, e se as quebras apontadas são reais (vá direto ao trecho citado).`,
+    proximo:`Checar padrões Ayesa`
+  },
+  {
+    id:15, nome:'Checar padrões Ayesa', ferramenta:'Claude Code', etapa:'verificacao', etapaLabel:'3 · Verificação',
+    quando:`Antes do commit, para checar problemas recorrentes de qualidade em código ABAP.`,
+    prompt:`Revise o código implementado nesta sessão procurando especificamente por:
+
+1. SELECT dentro de loop (deveria ser SELECT ... FOR ALL ENTRIES ou equivalente).
+2. Ausência de AUTHORITY-CHECK em operações que deveriam ter controle de autorização.
+3. Valores fixos no código (datas, códigos de empresa, nomes de tabela Z) que deveriam estar em uma tabela de configuração ou constante.
+
+Para cada ocorrência, cite o arquivo, a linha (ou o trecho) e sugira a correção. Não corrija automaticamente, só liste.`,
+    esperar:`Uma lista de ocorrências dos três problemas, cada uma com arquivo, trecho e sugestão de correção, sem nenhuma edição automática.`,
+    conferir:`Se as ocorrências listadas realmente existem no código (confira ao menos uma manualmente) e se nenhuma ocorrência real ficou de fora.`,
+    proximo:`Registro de evidências de verificação`
+  },
+  {
+    id:16, nome:'Registro de evidências de verificação', ferramenta:'Claude Code', etapa:'verificacao', etapaLabel:'3 · Verificação',
+    quando:`Ao final do ciclo de verificação de um passo ou de uma entrega, para deixar rastro do que foi checado.`,
+    prompt:`Monte um registro de evidências de verificação para o que foi implementado nesta sessão, em formato de lista:
+
+1. O que foi checado (revisão estática, testes ABAP Unit, rastreabilidade, padrões Ayesa).
+2. O resultado de cada checagem.
+3. Pendências que ficaram sem resposta ou sem checagem, se houver.
+
+Esse registro é para acompanhar o commit ou o PR, não precisa ser um documento formal.`,
+    esperar:`Uma lista objetiva com o que foi checado, o resultado de cada checagem e as pendências em aberto.`,
+    conferir:`Se o registro cobre todas as checagens feitas nesta sessão, não só a última, e se as pendências realmente estão sem resposta, não esquecidas.`,
+    proximo:`Revisar o diff antes do commit`
+  },
+  {
+    id:17, nome:'Revisar o diff antes do commit', ferramenta:'Claude Code', etapa:'commit', etapaLabel:'4 · Commit',
+    quando:`Imediatamente antes de pedir o commit, para revisar exatamente o que vai ser gravado.`,
+    prompt:`Antes de qualquer commit, use /diff para me mostrar exatamente o que foi alterado nesta sessão.
+
+Depois, revise você mesmo esse diff e aponte: alguma alteração que não estava no plano aprovado, qualquer arquivo que não devia ter sido tocado, e qualquer resquício de dado de teste ou comentário temporário que deveria ser removido antes do commit.`,
+    esperar:`O diff completo da sessão (via /diff) seguido de uma autorrevisão apontando alterações fora do plano, arquivos indevidos ou resquícios a remover.`,
+    conferir:`Se o diff mostrado é realmente o diff completo da sessão (compare com git status) e se a autorrevisão não deixou passar nada óbvio.`,
+    proximo:`Mensagem de commit e descrição do PR ligando REQ e ET`
+  },
+  {
+    id:18, nome:'Mensagem de commit e descrição do PR', ferramenta:'Claude Code', etapa:'commit', etapaLabel:'4 · Commit',
+    quando:`Ao preparar o commit final de uma implementação, para documentar a rastreabilidade.`,
+    prompt:`Com base no diff revisado, escreva:
+
+1. Uma mensagem de commit objetiva, no padrão deste repositório, citando REQ-MM-001 e TS-MM-001.
+2. Uma descrição de PR com: o que foi implementado, por que (ligando ao REQ-MM-001), como foi verificado (cite a etapa de Verificação) e qualquer risco remanescente.
+
+Não inclua dados fictícios como se fossem reais; mantenha os identificadores REQ-MM-001 e TS-MM-001 como estão.`,
+    esperar:`Uma mensagem de commit objetiva e uma descrição de PR estruturada, ambas citando o requisito e a especificação técnica envolvidos.`,
+    conferir:`Se a mensagem de commit segue o padrão do repositório e se a descrição do PR realmente liga o que foi feito ao motivo (REQ) e à verificação, não só ao "o que".`,
+    proximo:`Retomar a sessão de um PR`
+  },
+  {
+    id:19, nome:'Retomar a sessão de um PR', ferramenta:'Claude Code', etapa:'commit', etapaLabel:'4 · Commit',
+    quando:`Ao voltar para revisar ou ajustar um PR depois de um tempo, ou ao retomar uma sessão anterior sem PR.`,
+    prompt:`Preciso retomar o contexto da sessão que gerou o PR [número do PR]. Use claude --from-pr [número do PR] para abrir o seletor de sessões vinculadas a esse PR e retome a sessão correta.
+
+Se não houver PR (foi uma sessão só local), use /resume para abrir o seletor de conversas anteriores e escolha a sessão certa pelo nome ou pela data.`,
+    esperar:`A sessão anterior retomada, com o Claude relembrando o contexto do PR ou da conversa escolhida.`,
+    conferir:`Se o contexto retomado é realmente o da implementação certa (confirme pedindo um resumo do que foi feito até agora) antes de pedir qualquer ajuste novo.`,
+    proximo:`Nota de handoff para o time e para o próximo desenvolvedor`
+  },
+  {
+    id:20, nome:'Nota de handoff', ferramenta:'Claude Code', etapa:'commit', etapaLabel:'4 · Commit',
+    quando:`Ao encerrar o trabalho em uma implementação que outra pessoa vai continuar ou revisar.`,
+    prompt:`Escreva uma nota de handoff para quem for continuar este trabalho, cobrindo:
+
+1. O que já foi implementado e onde (arquivos).
+2. O que ainda falta, segundo o plano original.
+3. Qualquer decisão tomada no meio do caminho que fugiu do plano, e por quê.
+4. Pendências de verificação, se houver (reaproveite o registro de evidências desta sessão).
+
+A nota deve ser curta o suficiente para alguém que não acompanhou a sessão entender o estado atual em poucos minutos.`,
+    esperar:`Uma nota de handoff curta e objetiva cobrindo o que foi feito, o que falta, decisões fora do plano e pendências de verificação.`,
+    conferir:`Se alguém que não participou da sessão conseguiria entender o estado atual só lendo essa nota, sem precisar abrir o código.`
+  },
+  {
+    id:21, nome:'Pedir direto um ajuste pontual', ferramenta:'Claude Code', etapa:'var-pequena', etapaLabel:'Variação · Tarefa pequena',
+    quando:`Para um ajuste pequeno e bem definido, que não justifica passar pelo fluxo completo de Explore e Plan.`,
+    prompt:`No arquivo src/ZFM_VALIDA_FORNECEDOR_MM001.abap, ajuste [descreva o ajuste pontual, por exemplo "a mensagem de erro quando o fornecedor está bloqueado, para incluir o código do bloqueio"]. É um ajuste pequeno e isolado, não precisa de plano.
+
+Ao terminar, me mostre o /diff da alteração.`,
+    esperar:`O ajuste pontual implementado direto, com o /diff mostrando exatamente o que mudou.`,
+    conferir:`Se a alteração ficou restrita ao que foi pedido (confira pelo /diff) e se nenhum outro comportamento do objeto foi afetado.`,
+    proximo:`Revisar o diff antes do commit`
+  },
+  {
+    id:22, nome:'Subagente explorador', ferramenta:'Claude Code', etapa:'var-entender', etapaLabel:'Variação · Entender o código',
+    quando:`Para explorar uma parte grande ou desconhecida do código sem o risco de uma edição acidental.`,
+    prompt:`Crie um arquivo em .claude/agents/explorador.md para um subagente com ferramentas somente de leitura (Read, Grep, Glob), cuja instrução seja explorar e explicar código sem nunca editar nada.
+
+Use esse subagente para explorar a pasta src/ completa e me trazer um resumo de como os objetos se relacionam entre si.`,
+    esperar:`O arquivo do subagente criado em .claude/agents/explorador.md e um resumo de como os objetos de src/ se relacionam.`,
+    conferir:`Se o frontmatter do subagente realmente não inclui ferramentas de escrita (Edit, Write, Bash) e se o resumo cobre todos os arquivos de src/.`,
+    proximo:`Perguntar em camadas`
+  },
+  {
+    id:23, nome:'Perguntar em camadas', ferramenta:'Claude Code', etapa:'var-entender', etapaLabel:'Variação · Entender o código',
+    quando:`Para entender uma funcionalidade grande sem receber uma explicação só superficial ou só excessivamente detalhada.`,
+    prompt:`Me explique o que o módulo [nome do processo ou funcionalidade] faz, em três camadas:
+
+1. Uma frase, para alguém que não é técnico.
+2. Um parágrafo, cobrindo as principais regras de negócio envolvidas.
+3. Os detalhes técnicos: tabelas, objetos ABAP e fluxo de chamadas entre eles.
+
+Pare depois da camada 1 e me pergunte se eu quero a próxima camada, em vez de entregar tudo de uma vez.`,
+    esperar:`A primeira camada da explicação (uma frase), seguida de uma pergunta se você quer avançar para a próxima camada.`,
+    conferir:`Se a primeira camada realmente é compreensível sem conhecimento técnico, e se as camadas seguintes (quando pedidas) aprofundam sem repetir o que já foi dito.`,
+    proximo:`Registrar notas do que foi descoberto`
+  },
+  {
+    id:24, nome:'Registrar notas do que foi descoberto', ferramenta:'Claude Code', etapa:'var-entender', etapaLabel:'Variação · Entender o código',
+    quando:`Depois de uma sessão de exploração, para não perder o que foi aprendido sobre o código.`,
+    prompt:`Com base no que exploramos nesta sessão sobre [nome do módulo ou objeto], registre um resumo em um arquivo de notas (sugira o nome e a pasta, por exemplo notes/ZMM_NOTIF_GR_FI.md), cobrindo:
+
+1. O que o objeto faz e por quê.
+2. As dependências mais importantes.
+3. Qualquer ponto confuso ou mal documentado que valeria uma pergunta para o time.
+
+Não precisa ser formal, é para consulta rápida futura.`,
+    esperar:`Um arquivo de notas criado com o resumo do que foi explorado, incluindo pontos confusos a esclarecer com o time.`,
+    conferir:`Se o arquivo foi criado na pasta sugerida e se as notas realmente ajudariam você, ou outra pessoa, a retomar o assunto sem reexplorar tudo de novo.`
+  },
+  {
+    id:25, nome:'Explorar o PR de outra pessoa', ferramenta:'Claude Code', etapa:'var-revisao', etapaLabel:'Variação · Revisão de código',
+    quando:`Ao receber um PR de outra pessoa para revisar, antes de dar qualquer parecer.`,
+    prompt:`Use /code-review [número do PR] para revisar o PR. Antes de me dar o parecer, me explique em linguagem simples o que esse PR faz e quais arquivos ele toca, como se eu não tivesse lido o código ainda.`,
+    esperar:`Uma explicação em linguagem simples do que o PR faz e quais arquivos ele altera, antes de qualquer parecer técnico detalhado.`,
+    conferir:`Se a explicação realmente ajuda a entender a intenção do PR antes de entrar nos detalhes, e se os arquivos citados batem com o PR real.`,
+    proximo:`Revisar contra a ET, segurança e performance`
+  },
+  {
+    id:26, nome:'Revisar contra a ET, segurança e performance', ferramenta:'Claude Code', etapa:'var-revisao', etapaLabel:'Variação · Revisão de código',
+    quando:`Durante a revisão de um PR, para um parecer técnico estruturado.`,
+    prompt:`Revise este PR contra a design/TS-MM-001.md e aponte, separadamente:
+
+1. Aderência à especificação técnica: o que atende, o que não atende ou está ambíguo.
+2. Segurança: ausência de AUTHORITY-CHECK, exposição de dados sensíveis, validações de entrada faltando.
+3. Performance: SELECT dentro de loop, acessos a tabela sem índice adequado, lógica redundante.
+
+Para cada ponto, cite o arquivo e o trecho, e classifique a gravidade (🔴 Crítico / 🟡 Atenção / 🟢 Sugestão).`,
+    esperar:`Um parecer dividido em aderência à TS, segurança e performance, com cada ponto classificado por gravidade e referenciado ao trecho do código.`,
+    conferir:`Se os pontos 🔴 Crítico realmente impedem a aprovação do PR, e se nenhuma das três categorias ficou sem nenhum apontamento, mesmo que seja "nada encontrado".`,
+    proximo:`Resumo para a sua decisão`
+  },
+  {
+    id:27, nome:'Resumo para a sua decisão', ferramenta:'Claude Code', etapa:'var-revisao', etapaLabel:'Variação · Revisão de código',
+    quando:`Ao final da revisão de um PR, para decidir entre aprovar, pedir ajustes ou recusar.`,
+    prompt:`Com base em tudo que revisamos neste PR, me dê um resumo final para eu decidir: aprovar, pedir ajustes ou recusar.
+
+O resumo deve ter, no máximo, os 3 pontos que realmente pesam na decisão (não repita a lista inteira de achados) e terminar com sua recomendação objetiva entre as três opções, com uma frase de justificativa.`,
+    esperar:`Um resumo com os três pontos mais relevantes da revisão e uma recomendação objetiva (aprovar, pedir ajustes ou recusar) com justificativa.`,
+    conferir:`Se os três pontos escolhidos são realmente os que mais pesam, não os mais fáceis de explicar, e se a recomendação é coerente com a gravidade apontada na etapa anterior.`
+  },
+  {
+    id:28, nome:'Dar o erro', ferramenta:'Claude Code', etapa:'var-bug', etapaLabel:'Variação · Corrigir bug',
+    quando:`Ao reportar um bug para o Claude investigar, logo no início do atendimento.`,
+    prompt:`Encontramos um erro em produção. Segue o dump anonimizado (ST22) e o contexto:
+
+[Cole aqui o dump ST22 anonimizado, sem nomes de cliente ou dados reais]
+
+Contexto: módulo [MM ou FI], objeto provável [nome do objeto, se souber], frequência do erro [sempre / às vezes / só em um cenário específico], e o que o usuário estava fazendo quando o erro ocorreu.
+
+Antes de propor qualquer correção, me diga qual hipótese de causa você considera mais provável e por quê.`,
+    esperar:`Uma hipótese de causa provável para o erro, com justificativa baseada no dump e no contexto, antes de qualquer tentativa de correção.`,
+    conferir:`Se a hipótese realmente explica o erro do dump, e não é um chute genérico, e se ela é testável no próximo passo.`,
+    proximo:`Reproduzir e corrigir com mudança mínima`
+  },
+  {
+    id:29, nome:'Reproduzir e corrigir com mudança mínima', ferramenta:'Claude Code', etapa:'var-bug', etapaLabel:'Variação · Corrigir bug',
+    quando:`Depois de ter uma hipótese de causa, para confirmar o bug e corrigi-lo sem abrir escopo demais.`,
+    prompt:`Com base na hipótese de causa levantada, escreva um teste ABAP Unit que reproduza o bug (o teste deve falhar hoje, confirmando o problema).
+
+Depois, implemente a correção mínima necessária para esse teste passar, sem alterar nenhum outro comportamento do objeto. Se a correção exigir uma mudança maior do que isso, pare e me explique por quê antes de continuar.`,
+    esperar:`Um teste que reproduz o bug e falha antes da correção, seguido de uma correção mínima que faz esse teste passar, sem alterações fora do necessário.`,
+    conferir:`Se o teste realmente reproduz o cenário do dump original, e se a correção não alterou nada além do necessário (confira com /diff).`,
+    proximo:`Verificar a correção e registrar`
+  },
+  {
+    id:30, nome:'Verificar a correção e registrar', ferramenta:'Claude Code', etapa:'var-bug', etapaLabel:'Variação · Corrigir bug',
+    quando:`Depois de corrigir um bug, antes de considerar o atendimento encerrado.`,
+    prompt:`Rode as checagens disponíveis sobre a correção deste bug (revisão estática e o teste ABAP Unit que reproduz o caso) e me traga a evidência exata, não só "corrigido".
+
+Depois, registre num formato curto: qual era o bug, qual foi a causa raiz, o que foi alterado e como foi verificado, para ficar relacionado ao chamado original.`,
+    esperar:`Evidência da verificação da correção (teste passando, revisão feita) seguida de um registro curto ligando bug, causa raiz, correção e verificação.`,
+    conferir:`Se a evidência mostrada é do teste que reproduz este bug especificamente, e se o registro permitiria a outra pessoa entender o caso sem reabrir o chamado.`
+  },
+];
+
 // ===== STATE =====
 
 let currentLibrary = 'prompts';
@@ -1798,6 +2225,7 @@ let currentFuncaoArea = 'all';
 let selectedFuncao = null;
 let currentSkillFilter = 'all';
 let currentAutoFilter = 'all';
+let currentDevFilter = 'all';
 let currentContent = null;
 
 // ===== LIBRARY SWITCHER =====
@@ -1830,6 +2258,12 @@ function setLibrary(lib) {
       sub:'Automações Cowork prontas — fluxos completos para tarefas recorrentes da Ayesa',
       ph:'Buscar por nome ou atividade...',
       cls:'hero-automacoes', s1n:automacoes.length, s1l:'Automações', s2n:7, s2l:'Áreas', s3:false
+    },
+    desenvolvimento: {
+      title:'Desenvolvimento com Agentes',
+      sub:'Prompts para usar no Claude Code ao longo do fluxo Explore, Plan, Code, Verificação e Commit',
+      ph:'Buscar por nome, etapa ou ferramenta...',
+      cls:'hero-desenvolvimento', s1n:desenvolvimento.length, s1l:'Prompts', s2n:9, s2l:'Etapas', s3:false
     }
   };
   const c = cfgs[lib];
@@ -1851,6 +2285,7 @@ function setLibrary(lib) {
   document.getElementById('sidebarPrompts').style.display = lib === 'prompts' ? '' : 'none';
   document.getElementById('sidebarSkills').style.display = lib === 'skills' ? '' : 'none';
   document.getElementById('sidebarAutomacoes').style.display = lib === 'automacoes' ? '' : 'none';
+  document.getElementById('sidebarDesenvolvimento').style.display = lib === 'desenvolvimento' ? '' : 'none';
 
   render();
 }
@@ -2051,6 +2486,45 @@ function autoCardHtml(a) {
   </div>`;
 }
 
+// ===== DESENVOLVIMENTO COM AGENTES LOGIC =====
+
+function setDevFilter(etapa, evt) {
+  currentDevFilter = etapa;
+  document.querySelectorAll('#sidebarDesenvolvimento .filter-btn').forEach(b=>b.classList.remove('active'));
+  evt.currentTarget.classList.add('active');
+  render();
+}
+
+function renderDesenvolvimento() {
+  const container = document.getElementById('mainContainer');
+  const filtered = desenvolvimento.filter(d => {
+    const ms = !currentSearch ||
+      d.nome.toLowerCase().includes(currentSearch) ||
+      d.etapaLabel.toLowerCase().includes(currentSearch) ||
+      d.quando.toLowerCase().includes(currentSearch) ||
+      d.ferramenta.toLowerCase().includes(currentSearch);
+    const mf = currentDevFilter==='all' || d.etapa===currentDevFilter;
+    return ms && mf;
+  });
+  document.getElementById('resultCount').textContent =
+    filtered.length===desenvolvimento.length ? `Mostrando todos os ${desenvolvimento.length} prompts` :
+    `${filtered.length} prompt${filtered.length!==1?'s':''} encontrado${filtered.length!==1?'s':''}`;
+  if (!filtered.length) { container.innerHTML = noResults(); return; }
+  container.innerHTML = `<div class="cards-grid">${filtered.map(d=>devCardHtml(d)).join('')}</div>`;
+}
+
+function devCardHtml(d) {
+  return `<div class="card card-dev" onclick="openDevModal(${d.id})">
+    <div class="card-framework">${d.etapaLabel}</div>
+    <div class="card-title">${d.nome}</div>
+    <div class="card-subtitle">${d.quando}</div>
+    <div class="card-meta">
+      <span class="card-tag">${d.ferramenta}</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </div>`;
+}
+
 // ===== SHARED =====
 
 function onSearch() {
@@ -2064,8 +2538,10 @@ function render() {
     else renderFuncao();
   } else if (currentLibrary === 'skills') {
     renderSkills();
-  } else {
+  } else if (currentLibrary === 'automacoes') {
     renderAutomacoes();
+  } else {
+    renderDesenvolvimento();
   }
 }
 
@@ -2153,6 +2629,34 @@ function openAutoModal(id) {
   btn.className = 'copy-btn';
   btn.textContent = '📋 Copiar automação';
   btn.onmouseover = () => { btn.style.background='var(--auto)'; btn.style.borderColor='var(--auto)'; btn.style.color='white'; };
+  btn.onmouseout = () => { if (!btn.classList.contains('copied')) { btn.style.background=''; btn.style.borderColor=''; btn.style.color=''; } };
+  openModalOverlay();
+}
+
+function openDevModal(id) {
+  const d = desenvolvimento.find(x=>x.id===id);
+  if (!d) return;
+  currentContent = d.prompt;
+  document.getElementById('modalFramework').textContent = d.ferramenta + ' · ' + d.etapaLabel;
+  document.getElementById('modalTitle').textContent = d.nome;
+  document.getElementById('modalMeta').innerHTML = `
+    <span class="modal-badge tag-dev">${d.etapaLabel}</span>
+    <span class="modal-badge" style="background:var(--bg);color:var(--text-muted)">${d.ferramenta}</span>`;
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-quando"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light);">Quando usar</strong><br>${d.quando}</div>
+    <div class="prompt-block pb-dev">
+      <div class="prompt-block-label">💻 Prompt</div>
+      <div class="prompt-block-text">${escHtml(d.prompt)}</div>
+    </div>
+    <div class="modal-quando"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light);">O que esperar</strong><br>${d.esperar}</div>
+    <div class="modal-quando"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light);">O que conferir</strong><br>${d.conferir}</div>
+    ${d.proximo ? `<div class="modal-quando"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light);">Próximo passo</strong><br>${d.proximo}</div>` : ''}`;
+  document.getElementById('modalTip').style.display = 'none';
+  document.getElementById('modalFuncoes').innerHTML = '';
+  const btn = document.getElementById('copyBtn');
+  btn.className = 'copy-btn';
+  btn.textContent = '📋 Copiar prompt';
+  btn.onmouseover = () => { btn.style.background='var(--dev)'; btn.style.borderColor='var(--dev)'; btn.style.color='white'; };
   btn.onmouseout = () => { if (!btn.classList.contains('copied')) { btn.style.background=''; btn.style.borderColor=''; btn.style.color=''; } };
   openModalOverlay();
 }
